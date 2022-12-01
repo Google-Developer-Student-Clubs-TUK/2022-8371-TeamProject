@@ -5,14 +5,14 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
-@Builder
+@Setter
 @ToString
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     private String title;
@@ -30,6 +30,6 @@ public class Event {
     private float longitude;
 
     @Column(nullable = false)
-    private int check;
+    private int checkNum;
 
 }
