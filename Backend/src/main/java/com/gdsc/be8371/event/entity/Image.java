@@ -11,34 +11,23 @@ import java.sql.Date;
 @ToString
 @Builder
 @AllArgsConstructor
-public class Event {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String fileUrl;
 
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = false)
-    private String category;
-
-    @Column(nullable = false)
-    private float latitude;
-
-    @Column(nullable = false)
-    private float longitude;
-
-    @Column(nullable = false)
-    private int checkNum;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     @Column(nullable = false)
     @CreatedDate
     private Date createdAt;
 
-    public Event() {
+    public Image() {
 
     }
 }
