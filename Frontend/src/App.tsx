@@ -1,9 +1,11 @@
+import EventDetailBox from "./components/EventDetailBox";
 import EnrollEventBox from "./components/EnrollEventBox";
 
 function App() {
   return (
     <div>
-      <EnrollEventBox />
+      {/* <EnrollEventBox /> */}
+      <EventDetailBox />
     </div>
   );
 }
