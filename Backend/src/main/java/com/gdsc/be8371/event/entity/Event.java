@@ -1,8 +1,10 @@
 package com.gdsc.be8371.event.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Getter
@@ -31,6 +33,10 @@ public class Event {
 
     @Column(nullable = false)
     private int checkNum;
+
+    @Column(nullable = false)
+    @CreatedDate
+    private Date createdAt;
 
     public Event() {
 
