@@ -5,9 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
 @ToString
 public class Event {
     @Id
@@ -32,4 +32,7 @@ public class Event {
     @Column(nullable = false)
     private int checkNum;
 
+    public Event() {
+
+    }
 }
