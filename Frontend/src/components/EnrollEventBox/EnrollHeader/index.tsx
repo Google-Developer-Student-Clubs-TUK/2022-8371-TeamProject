@@ -30,13 +30,12 @@ const BackBtn = Styled.button`
   background-color : white;
   justify-content: center;
   align-items: center;
-
+  outline:none;
   &:hover {
-    border: 1px solid white;
     cursor : pointer;
   }
   &:focus {
-    border: 1px solid white;
+    outline:none;
   }
 
 `;
@@ -48,10 +47,13 @@ const BackImg = Styled.img`
 `;
 
 const EnrollHeader = () => {
+  const handleClickTest = () => {
+    console.log("success");
+  };
   return (
     <Container>
       <HeaderText>Enroll Event</HeaderText>
-      <BackBtn>
+      <BackBtn onClick={handleClickTest}>
         <BackImg src={backbtn} />
       </BackBtn>
     </Container>

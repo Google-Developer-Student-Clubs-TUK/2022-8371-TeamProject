@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Styled from "styled-components";
 import titleimg1 from "../../../assets/titleimg1.png";
 import titleimg2 from "../../../assets/titleimg2.png";
 import test from "../../../assets/test.png";
 
-const Container = Styled.div`
+const FormContainer = Styled.form`
   display: flex;
   align-items: center;
   width: 100%;
@@ -47,7 +47,28 @@ const InputBox = Styled.input`
   color : black;
   margin: 0 0 40px;
   box-shadow: 2px 2px 2px #BDBDBD;
+  outline:none;
+`;
 
+const ImageInputBtn = Styled.button`
+  background-color : white;
+  outline : none;
+  border : 0;
+  &:focus {
+    outline:none;
+  }
+  &:hover {
+    border : 0;
+    outline:none;
+  }
+`;
+
+const ImageInput = Styled.input`
+  outline : none;
+  display : none;
+  &:focus {
+    outline:none;
+  }
 `;
 
 const SubmitBtn = Styled.button`
@@ -66,25 +87,64 @@ const SubmitBtn = Styled.button`
 `;
 
 const EnrollInfoBox = () => {
+  const hiddenFileInput = useRef<HTMLInputElement>(null);
+  const [input1, setInput1] = useState("");
+  const [input2, setInput2] = useState("");
+
+  const handleClick = () => {
+    hiddenFileInput.current!.click();
+  };
+
+  const handleChange = (e: any) => {
+    const fileUploaded = e.target.files[0];
+    console.log(fileUploaded);
+  };
+
+  const handleInput1 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput1(e.target.value);
+    console.log(input1);
+  };
+  const handleInput2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput2(e.target.value);
+    console.log(input2);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(e.currentTarget.eventCategory.value);
+    console.log(e.currentTarget.eventLocation.value);
+  };
+
   return (
-    <Container>
+    <FormContainer onSubmit={onSubmit}>
       <TitleBox>
         <img src={titleimg1} />
         <TitleLabel>Basic Info</TitleLabel>
       </TitleBox>
 
       <InputLabel>재난 상황</InputLabel>
-      <InputBox />
+      <InputBox id="eventCategory" onChange={handleInput1} />
+
       <InputLabel>위치</InputLabel>
-      <InputBox />
+      <InputBox id="eventLocation" onChange={handleInput2} />
 
       <TitleBox>
         <img src={titleimg2} />
         <TitleLabel>Image Info</TitleLabel>
       </TitleBox>
-      <img src={test} />
-      <SubmitBtn>등록하시겠습니까?</SubmitBtn>
-    </Container>
+
+      <ImageInputBtn type="button" onClick={handleClick}>
+        <img src={test} />
+      </ImageInputBtn>
+      <ImageInput
+        type="file"
+        id="eventImgs"
+        ref={hiddenFileInput}
+        onChange={handleChange}
+      ></ImageInput>
+
+      <SubmitBtn type="submit">등록하시겠습니까?</SubmitBtn>
+    </FormContainer>
   );
 };
 
