@@ -8,9 +8,9 @@ import java.sql.Date;
 
 @Entity
 @Getter
-@ToString
 @Builder
 @AllArgsConstructor
+@ToString
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
