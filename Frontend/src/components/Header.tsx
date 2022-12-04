@@ -3,6 +3,7 @@ import logo from "../assets/logo.png";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { SideBar } from "./SideBar";
 const Container = styled.div`
   background-color: #ffffff;
   height: 8vh;
@@ -62,27 +63,6 @@ const Slider = styled.div<{ active: boolean }>`
   transition: all 0.2s ease-in-out;
   box-shadow: 2px 4px 8px;
   margin-left: ${(props) => (props.active ? "65px" : "0px")};
-`;
-
-const SideBar = styled.div<{
-  active: boolean;
-  activeList: boolean;
-  activeRegister: boolean;
-}>`
-  float: right;
-  height: 92vh;
-  margin-left: 100vw;
-  width: ${(props) => (props.active ? "35vw" : "35vw")};
-  background-color: #ffffff;
-  border-radius: 10px;
-  transform: ${(props) =>
-    props.activeList || props.activeRegister
-      ? "translatex(-100%)"
-      : "translatex(0%)"};
-  transition: transform 0.2s ease-in-out;
-  box-shadow: 2px 4px 8px;
-  position: absolute;
-  z-index: 3;
 `;
 
 function Header() {
