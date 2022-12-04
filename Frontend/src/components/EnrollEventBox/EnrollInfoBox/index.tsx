@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import Styled from "styled-components";
-import titleimg1 from "../../../assets/titleimg1.png";
-import titleimg2 from "../../../assets/titleimg2.png";
-import test from "../../../assets/test.png";
+import titleimg1 from "@/assets/titleimg1.png";
+import titleimg2 from "@/assets/titleimg2.png";
+import test from "@/assets/test.png";
 
 const FormContainer = Styled.form`
   display: flex;

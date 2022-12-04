@@ -15,7 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "./src"
+    "baseUrl": ".", //절대경로 설정
+    "paths": { "@/*": ["src/*"] } //절대경로 설정
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

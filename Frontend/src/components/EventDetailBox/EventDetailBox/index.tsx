@@ -1,5 +1,5 @@
 import Styled from "styled-components";
-import test from "../../../assets/test.png";
+import test from "@/assets/test.png";
 
 const Container = Styled.div`
   display: flex;

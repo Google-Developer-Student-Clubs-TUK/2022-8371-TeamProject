@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import backbtn from "../../../assets/backbtn.png";
+import backbtn from "@/assets/backbtn.png";
 
 const Container = Styled.div`
   display: flex;
