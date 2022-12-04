@@ -8,10 +8,13 @@ import com.gdsc.be8371.global.entity.ResponseFormat;
 import com.gdsc.be8371.global.entity.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
@@ -23,9 +26,9 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping("")
-    public List<Event> get_event_all() throws Exception {
-        List<Event> events = eventService.get_event_all();
-        return events;
+    public ResponseEntity<List<EventResponseDTO>> get_event_all() throws Exception {
+        List<EventResponseDTO> events = eventService.get_event_all();
+        return new ResponseEntity<List<EventResponseDTO>>(events, HttpStatus.OK);
     }
 
     // 이벤트 생성

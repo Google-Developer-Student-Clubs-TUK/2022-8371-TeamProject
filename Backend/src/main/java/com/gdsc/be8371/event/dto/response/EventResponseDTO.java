@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -20,8 +21,8 @@ public class EventResponseDTO {
     private float latitude;
     private float longitude;
     private int checkNum;
-    private LocalDateTime createdAt;
-    private LocalDateTime deadLine;
+    private Date createdAt;
+    private Date deadLine;
 
 //    public EventResponseDTO toDto(Event eventEntity) {
 //        return EventResponseDTO.builder().build();
@@ -38,4 +39,5 @@ public class EventResponseDTO {
                 .deadLine(LocalDateTime.now().plusDays(2))
                 .build();
     }
+
 }
