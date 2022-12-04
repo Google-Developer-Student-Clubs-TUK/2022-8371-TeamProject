@@ -10,9 +10,9 @@ public class ResponseFormat<T> {
 
     private T result;
 
-    public ResponseFormat(ResponseFormat status) {
-        this.code = getCode();
-        this.message = getMessage();
+    public ResponseFormat(ResponseStatus status) {
+        this.code = status.getCode();
+        this.message = status.getMessage();
     }
 
     public ResponseFormat(ResponseStatus status, T result){

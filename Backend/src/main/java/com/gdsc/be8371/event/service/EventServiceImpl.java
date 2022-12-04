@@ -22,7 +22,10 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventResponseDTO> get_event_all() throws Exception {
         List<Event> events = eventRepository.findAll();
-        List<EventResponseDTO> eventResponseDTOList = toEventResponseDTO(events);
+        List<EventResponseDTO> eventResponseDTOList = new ArrayList<EventResponseDTO>();
+        for(Event event : events){
+            eventResponseDTOList.add(event.toEventResponseDto(event));
+        }
         return eventResponseDTOList;
     }
 
@@ -32,32 +35,10 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findAllByCategory(category);
     }
 
-    public List<EventResponseDTO> toEventResponseDTO(List<Event> events) {
-        List<EventResponseDTO> eventResponseDTOs = new ArrayList<EventResponseDTO>();
-        Date currentDate = new Date(System.currentTimeMillis());
-        for (Event event : events) {
-            EventResponseDTO eventResponseDTO = EventResponseDTO.builder()
-                    .id(event.getId())
-                    .title(event.getTitle())
-                    .content(event.getContent())
-                    .category(event.getCategory())
-                    .latitude(event.getLatitude())
-                    .longitude(event.getLongitude())
-                    .checkNum(event.getCheckNum())
-                    .createdAt(event.getCreatedAt())
-                    .deadLine(currentDate)
-                    .build();
-            eventResponseDTOs.add(eventResponseDTO);
-        }
-        return eventResponseDTOs;
-    }
-
     @Override
-    public EventResponseDTO create(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO) throws Exception{
+    public void create(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO) throws Exception{
         //Event saveEvent = eventRequestDTO.toEntity(eventRequestDTO);
-        Event saveEvent = eventRequestDTO.toEntity(eventRequestDTO);
+        Event saveEvent = eventRequestDTO.toEventEntity(eventRequestDTO);
         eventRepository.save(saveEvent);
-
-        return eventResponseDTO.toDto(saveEvent);
     }
 }

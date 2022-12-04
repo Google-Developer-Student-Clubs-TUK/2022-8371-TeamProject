@@ -25,17 +25,18 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @GetMapping("")
-    public ResponseEntity<List<EventResponseDTO>> get_event_all() throws Exception {
+    @GetMapping
+    public ResponseEntity<ResponseFormat<List<EventResponseDTO>>> get_event_all() throws Exception {
         List<EventResponseDTO> events = eventService.get_event_all();
-        return new ResponseEntity<List<EventResponseDTO>>(events, HttpStatus.OK);
+        ResponseFormat<List<EventResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.GET_EVENT_SUCCESS, events);
+        return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
     }
 
     // 이벤트 생성
     @PostMapping
     public ResponseEntity<ResponseFormat<EventResponseDTO>> create_event(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO, Event event) throws Exception{
-        EventResponseDTO save_event = eventService.create(eventRequestDTO, eventResponseDTO);
-        ResponseFormat<EventResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.POST_EVENT_SUCCESS, save_event);
+        eventService.create(eventRequestDTO, eventResponseDTO);
+        ResponseFormat<EventResponseDTO> responseFormat = new ResponseFormat(ResponseStatus.POST_EVENT_SUCCESS);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
     }

@@ -27,17 +27,6 @@ public class EventResponseDTO {
 //    public EventResponseDTO toDto(Event eventEntity) {
 //        return EventResponseDTO.builder().build();
 //    }
-    public EventResponseDTO toDto(Event event){
-        return EventResponseDTO.builder()
-                .title(event.getTitle())
-                .content(event.getContent())
-                .category(event.getCategory())
-                .latitude(event.getLatitude())
-                .longitude(event.getLongitude())
-                .checkNum(event.getCheckNum())
-                .createdAt(LocalDateTime.now())
-                .deadLine(LocalDateTime.now().plusDays(2))
-                .build();
-    }
+
 
 }

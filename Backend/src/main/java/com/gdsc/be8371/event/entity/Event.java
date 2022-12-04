@@ -8,12 +8,14 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @DynamicInsert
 //@Builder
 //@AllArgsConstructor
@@ -43,22 +45,39 @@ public class Event {
     @ColumnDefault("0")
     private int checkNum;
 
+    @Column(nullable = false)
+    private Date createdAt;
+
+    public Event() {
+
+    }
+
 //    @Column(nullable = false)
 //    @CreatedDate
 //    private Date createdAt;
 
-    @Builder
-    public Event(String title, String content, String category, float longitude, float latitude, int checkNum){
-        this.title = title;
-        this.content = content;
-        this.category = category;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.checkNum = checkNum;
-    }
+//    @Builder
+//    public Event(String title, String content, String category, float longitude, float latitude, int checkNum){
+//        this.title = title;
+//        this.content = content;
+//        this.category = category;
+//        this.latitude = latitude;
+//        this.longitude = longitude;
+//        this.checkNum = checkNum;
+//    }
 
 //    public Event() {
 //
 //    }
-
+    public EventResponseDTO toEventResponseDto(Event event){
+        return EventResponseDTO.builder()
+                .title(event.getTitle())
+                .content(event.getContent())
+                .category(event.getCategory())
+                .latitude(event.getLatitude())
+                .longitude(event.getLongitude())
+                .checkNum(event.getCheckNum())
+                .createdAt(new Date(System.currentTimeMillis()))
+                .build();
+    }
 }
