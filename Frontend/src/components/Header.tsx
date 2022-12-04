@@ -3,8 +3,8 @@ import styled from "styled-components";
 import logo from "../assets/logo.png";
 
 const Container = styled.div`
-  background-color: #228be6;
-  height: 70px;
+  background-color: #ffffff;
+  height: 8vh;
   display: flex;
   flex-direction: row
   justify-contents: center;
@@ -12,14 +12,18 @@ const Container = styled.div`
 `;
 
 const HeaderButton1 = styled.button`
-  margin-top: 10px;
-  width: 80px;
-  height: 50px;
+  margin-top: 3vh;
+  width: 4.2vw;
+  height: 3vh;
+  background-color: #ffffff;
+  border: none;
 `;
 const HeaderButton2 = styled.button`
-  margin-top: 10px;
-  width: 80px;
-  height: 50px;
+  margin-top: 3vh;
+  width: 4.2vw;
+  height: 3vh;
+  background-color: #ffffff;
+  border: none;
 `;
 
 const Logo = styled.div`
@@ -56,7 +60,7 @@ function Header() {
         <div style={{ marginTop: "25px" }}>8371</div>
       </Logo>
 
-      <div style={{ flexDirection: "column", marginLeft: "80%" }}>
+      <div style={{ flexDirection: "column", marginLeft: "80vw" }}>
         <div>
           <HeaderButton1 onClick={onActive1}>재난목록</HeaderButton1>
           <HeaderButton2 onClick={onActive2}>재난등록</HeaderButton2>
