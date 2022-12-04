@@ -23,7 +23,7 @@ public class EventRequestDTO {
 //    public Event toEntity(EventRequestDTO eventRequestDTO) {
 //        return Event.builder().build();
 
-    public Event toEntity(EventRequestDTO eventRequestDTO) {
+    public Event toEventEntity(EventRequestDTO eventRequestDTO) {
         return Event.builder()
                 .title(eventRequestDTO.getTitle())
                 .category(eventRequestDTO.getCategory())
