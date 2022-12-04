@@ -1,10 +1,12 @@
 package com.gdsc.be8371.event.entity;
 
+import com.gdsc.be8371.event.dto.response.EventResponseDTO;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,4 +43,6 @@ public class Event {
     public Event() {
 
     }
+
+
 }

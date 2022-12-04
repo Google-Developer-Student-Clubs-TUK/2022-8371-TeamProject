@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.sql.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -31,22 +32,24 @@ class ApplicationTests {
 
     @Test
     void saveEventTest(){
+        Date date = new Date(System.currentTimeMillis());
         Event event = Event.builder()
-                .title("test")
-                .content("test")
+                .title("test2")
+                .content("test2")
                 .longitude(10.101f)
                 .latitude(20.202f)
                 .checkNum(0)
-                .category("test")
+                .category("test2")
+                .createdAt(date)
                 .build();
         eventRepository.save(event);
     }
 
-    @Test
-    void get_event_all() throws Exception {
-        List<Event> events = eventService.get_event_all();
-        System.out.println(events);
-    }
+//    @Test
+//    void get_event_all() throws Exception {
+//        List<Event> events = eventService.get_event_all();
+//        System.out.println(events);
+//    }
 
 
 }

@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import java.sql.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -22,4 +23,5 @@ public class EventResponseDTO {
     private int checkNum;
     private Date createdAt;
     private Date deadLine;
+
 }
