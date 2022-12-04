@@ -24,7 +24,6 @@ const TitleLabel = Styled.label`
 
 const TextLabel = Styled.label`
   font-size : 1rem;
-  
   color:black;
   font-weight : bold;
 `;
