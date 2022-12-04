@@ -1,6 +1,8 @@
 package com.gdsc.be8371.event.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -8,9 +10,13 @@ import java.sql.Date;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
+@Setter
+@NoArgsConstructor
+@DynamicInsert
+//@Builder
+//@AllArgsConstructor
 @ToString
+//@Data
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +37,25 @@ public class Event {
     @Column(nullable = false)
     private float longitude;
 
-    @Column(nullable = false)
+    @Column
+    @ColumnDefault("0")
     private int checkNum;
 
-    @Column(nullable = false)
-    @CreatedDate
-    private Date createdAt;
+//    @Column(nullable = false)
+//    @CreatedDate
+//    private Date createdAt;
 
-    public Event() {
-
+    @Builder
+    public Event(String title, String content, String category, float longitude, float latitude, int checkNum){
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.checkNum = checkNum;
     }
+
+//    public Event() {
+//
+//    }
 }

@@ -1,9 +1,15 @@
 package com.gdsc.be8371.event.controller;
 
+import com.gdsc.be8371.event.dto.request.EventRequestDTO;
+import com.gdsc.be8371.event.dto.response.EventResponseDTO;
 import com.gdsc.be8371.event.entity.Event;
 import com.gdsc.be8371.event.service.EventService;
+import com.gdsc.be8371.global.entity.ResponseFormat;
+import com.gdsc.be8371.global.entity.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,5 +26,14 @@ public class EventController {
     public List<Event> get_event_all() throws Exception {
         List<Event> events = eventService.get_event_all();
         return events;
+    }
+
+    // 이벤트 생성
+    @PostMapping
+    public ResponseEntity<ResponseFormat<EventResponseDTO>> create_event(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO, Event event) throws Exception{
+        EventResponseDTO save_event = eventService.create(eventRequestDTO, eventResponseDTO);
+        ResponseFormat<EventResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.POST_EVENT_SUCCESS, save_event);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
     }
 }

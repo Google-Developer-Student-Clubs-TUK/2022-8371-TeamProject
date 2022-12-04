@@ -36,7 +36,7 @@ class ApplicationTests {
                 .content("test")
                 .longitude(10.101f)
                 .latitude(20.202f)
-                .checkNum(0)
+//                .checkNum(0)
                 .category("test")
                 .build();
         eventRepository.save(event);
