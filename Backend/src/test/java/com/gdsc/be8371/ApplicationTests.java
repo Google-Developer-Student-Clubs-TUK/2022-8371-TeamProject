@@ -32,7 +32,7 @@ class ApplicationTests {
 
     @Test
     void saveEventTest(){
-        Date date = new Date(System.currentTimeMillis());
+        //Date date = new Date(System.currentTimeMillis());
         Event event = Event.builder()
                 .title("test3")
                 .content("test3")
@@ -40,7 +40,7 @@ class ApplicationTests {
                 .latitude(20.202f)
                 .checkNum(0)
                 .category("test3")
-                .createdAt(date)
+                //.createdAt(date)
                 .build();
         eventRepository.save(event);
     }

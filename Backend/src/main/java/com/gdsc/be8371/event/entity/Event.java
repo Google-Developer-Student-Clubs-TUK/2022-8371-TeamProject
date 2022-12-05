@@ -5,11 +5,11 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -17,10 +17,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @DynamicInsert
-//@Builder
-//@AllArgsConstructor
 @ToString
-//@Data
+@EntityListeners(AuditingEntityListener.class)
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,30 +43,22 @@ public class Event {
     @ColumnDefault("0")
     private int checkNum;
 
-    @Column(nullable = false)
-    private Date createdAt;
+//    @Column(nullable = false)
+//    private Date createdAt;
+
+    @Column
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     public Event() {
 
     }
 
-//    @Column(nullable = false)
-//    @CreatedDate
-//    private Date createdAt;
+    @PrePersist
+    public void onPrePersist(){
+        this.createdAt = LocalDateTime.now();
+    }
 
-//    @Builder
-//    public Event(String title, String content, String category, float longitude, float latitude, int checkNum){
-//        this.title = title;
-//        this.content = content;
-//        this.category = category;
-//        this.latitude = latitude;
-//        this.longitude = longitude;
-//        this.checkNum = checkNum;
-//    }
-
-//    public Event() {
-//
-//    }
     public EventResponseDTO toEventResponseDto(Event event){
         return EventResponseDTO.builder()
                 .title(event.getTitle())
@@ -77,7 +67,8 @@ public class Event {
                 .latitude(event.getLatitude())
                 .longitude(event.getLongitude())
                 .checkNum(event.getCheckNum())
-                .createdAt(new Date(System.currentTimeMillis()))
+                //.createdAt(new Date(System.currentTimeMillis()))
+                .createdAt(event.getCreatedAt())
                 .build();
     }
 }

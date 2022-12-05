@@ -7,7 +7,8 @@ import com.gdsc.be8371.event.entity.Event;
 import java.util.List;
 
 public interface EventService {
-    public void create(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO) throws Exception;
+    // 이벤트 생성
+    public void create(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO, List<String> urls) throws Exception;
     public List<EventResponseDTO> get_event_all() throws Exception;
     public List<Event> get_event_all_by_category(String category) throws Exception;
 }
