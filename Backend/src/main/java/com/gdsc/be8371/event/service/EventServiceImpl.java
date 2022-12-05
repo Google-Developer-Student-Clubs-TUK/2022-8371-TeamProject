@@ -36,7 +36,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void create(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO, List<String> urls) throws Exception{
+    public void create(EventRequestDTO eventRequestDTO, List<String> urls) throws Exception{
         Event saveEvent = eventRequestDTO.toEventEntity(eventRequestDTO);
         eventRepository.save(saveEvent);
         List<String> urlList = new ArrayList<>();
