@@ -14,14 +14,13 @@ import java.util.List;
 @Getter
 @ToString
 public class EventResponseDTO {
-//    private Integer id;
     private String title;
     private String content;
     private String category;
     private float latitude;
     private float longitude;
     private int checkNum;
-    private Date createdAt;
-    private Long deadLine;
     private List<Image> images;
+    private LocalDateTime createdAt;
+    private Date deadLine;
 }

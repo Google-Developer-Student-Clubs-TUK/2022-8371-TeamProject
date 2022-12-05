@@ -32,7 +32,7 @@ class ApplicationTests {
 
     @Test
     void saveEventTest(){
-        Date date = new Date(System.currentTimeMillis());
+        //Date date = new Date(System.currentTimeMillis());
         Event event = Event.builder()
                 .title("test2")
                 .content("test2")
@@ -41,6 +41,8 @@ class ApplicationTests {
                 .checkNum(0)
                 .category("test2")
                 .createdAt(date)
+                .category("test3")
+                //.createdAt(date)
                 .build();
         eventRepository.save(event);
     }

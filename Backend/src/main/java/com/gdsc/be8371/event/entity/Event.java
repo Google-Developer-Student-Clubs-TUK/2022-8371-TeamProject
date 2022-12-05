@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -19,10 +20,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @DynamicInsert
-//@Builder
-//@AllArgsConstructor
 @ToString
-//@Data
+@EntityListeners(AuditingEntityListener.class)
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,11 +46,20 @@ public class Event {
     @ColumnDefault("0")
     private int checkNum;
 
-    @Column(nullable = false)
-    private Date createdAt;
+//    @Column(nullable = false)
+//    private Date createdAt;
+
+    @Column
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     public Event() {
 
+    }
+
+    @PrePersist
+    public void onPrePersist(){
+        this.createdAt = LocalDateTime.now();
     }
 
     public EventResponseDTO toEventResponseDto(Event event){
