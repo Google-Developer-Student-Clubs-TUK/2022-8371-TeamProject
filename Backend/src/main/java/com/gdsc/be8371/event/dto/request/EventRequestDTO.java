@@ -20,9 +20,6 @@ public class EventRequestDTO {
     private float latitude;
     private float longitude;
 
-//    public Event toEntity(EventRequestDTO eventRequestDTO) {
-//        return Event.builder().build();
-
     public Event toEventEntity(EventRequestDTO eventRequestDTO) {
         return Event.builder()
                 .title(eventRequestDTO.getTitle())

@@ -8,7 +8,9 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Entity
@@ -52,23 +54,6 @@ public class Event {
 
     }
 
-//    @Column(nullable = false)
-//    @CreatedDate
-//    private Date createdAt;
-
-//    @Builder
-//    public Event(String title, String content, String category, float longitude, float latitude, int checkNum){
-//        this.title = title;
-//        this.content = content;
-//        this.category = category;
-//        this.latitude = latitude;
-//        this.longitude = longitude;
-//        this.checkNum = checkNum;
-//    }
-
-//    public Event() {
-//
-//    }
     public EventResponseDTO toEventResponseDto(Event event){
         return EventResponseDTO.builder()
                 .title(event.getTitle())
@@ -77,7 +62,8 @@ public class Event {
                 .latitude(event.getLatitude())
                 .longitude(event.getLongitude())
                 .checkNum(event.getCheckNum())
-                .createdAt(new Date(System.currentTimeMillis()))
+                .createdAt(event.getCreatedAt())
+                .deadLine(ChronoUnit.DAYS.between(LocalDate.now(), event.getCreatedAt().toLocalDate()))
                 .build();
     }
 }

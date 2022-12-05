@@ -22,17 +22,14 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventResponseDTO> get_event_all() throws Exception {
         List<Event> events = eventRepository.findAll();
-        List<EventResponseDTO> eventResponseDTOList = new ArrayList<EventResponseDTO>();
-        for(Event event : events){
-            eventResponseDTOList.add(event.toEventResponseDto(event));
-        }
-        return eventResponseDTOList;
+        return toEventResponseDTOs(events);
     }
 
 
     @Override
-    public List<Event> get_event_all_by_category(String category) throws Exception {
-        return eventRepository.findAllByCategory(category);
+    public List<EventResponseDTO> get_event_all(String category) throws Exception {
+        List<Event> events = eventRepository.findAllByCategory(category);
+        return toEventResponseDTOs(events);
     }
 
     @Override
@@ -40,5 +37,13 @@ public class EventServiceImpl implements EventService {
         //Event saveEvent = eventRequestDTO.toEntity(eventRequestDTO);
         Event saveEvent = eventRequestDTO.toEventEntity(eventRequestDTO);
         eventRepository.save(saveEvent);
+    }
+
+    public List<EventResponseDTO> toEventResponseDTOs(List<Event> events){
+        List<EventResponseDTO> eventResponseDTOList = new ArrayList<>();
+        for(Event event : events){
+            eventResponseDTOList.add(event.toEventResponseDto(event));
+        }
+        return eventResponseDTOList;
     }
 }

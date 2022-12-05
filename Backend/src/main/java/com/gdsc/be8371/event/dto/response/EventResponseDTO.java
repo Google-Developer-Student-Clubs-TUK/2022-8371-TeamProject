@@ -2,6 +2,7 @@ package com.gdsc.be8371.event.dto.response;
 
 import com.gdsc.be8371.event.dto.request.EventRequestDTO;
 import com.gdsc.be8371.event.entity.Event;
+import com.gdsc.be8371.event.entity.Image;
 import lombok.*;
 
 import java.sql.Date;
@@ -10,7 +11,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @Builder
-@Setter
 @Getter
 @ToString
 public class EventResponseDTO {
@@ -22,11 +22,6 @@ public class EventResponseDTO {
     private float longitude;
     private int checkNum;
     private Date createdAt;
-    private Date deadLine;
-
-//    public EventResponseDTO toDto(Event eventEntity) {
-//        return EventResponseDTO.builder().build();
-//    }
-
-
+    private Long deadLine;
+    private List<Image> images;
 }

@@ -8,17 +8,22 @@ import com.gdsc.be8371.global.entity.ResponseFormat;
 import com.gdsc.be8371.global.entity.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.WritableResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("api/v1/event")
 public class EventController {
 
@@ -26,11 +31,18 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping
-    public ResponseEntity<ResponseFormat<List<EventResponseDTO>>> get_event_all() throws Exception {
-        List<EventResponseDTO> events = eventService.get_event_all();
+    public ResponseEntity<ResponseFormat<List<EventResponseDTO>>> get_event_all(@RequestParam(required = false)String category) throws Exception {
+        List<EventResponseDTO> events = null;
+        System.out.println(category);
+        if (category != null) {
+            events = eventService.get_event_all(category);
+        } else {
+            events = eventService.get_event_all();
+        }
         ResponseFormat<List<EventResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.GET_EVENT_SUCCESS, events);
         return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
     }
+
 
     // 이벤트 생성
     @PostMapping
@@ -40,4 +52,5 @@ public class EventController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
     }
+    
 }
