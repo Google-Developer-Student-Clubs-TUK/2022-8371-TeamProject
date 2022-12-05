@@ -71,7 +71,6 @@ public class Event {
                 .longitude(event.getLongitude())
                 .checkNum(event.getCheckNum())
                 .createdAt(event.getCreatedAt())
-                .deadLine(ChronoUnit.DAYS.between(LocalDate.now(), event.getCreatedAt().toLocalDate()))
                 .build();
     }
 }

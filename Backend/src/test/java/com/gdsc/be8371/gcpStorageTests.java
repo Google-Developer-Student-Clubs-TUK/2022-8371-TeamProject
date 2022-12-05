@@ -19,11 +19,4 @@ public class gcpStorageTests {
     @Value("${gcs-resource-test-bucket}")
     private String bucketName;
 
-//    @Test
-//    public void saveImageTest() throws IOException{
-//        Image image1 = null;
-//        try {
-//            os.write(data.getBytes());
-//        }
-//    }
 }
