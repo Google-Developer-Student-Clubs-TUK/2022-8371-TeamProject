@@ -26,20 +26,17 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventResponseDTO> get_event_all() throws Exception {
         List<Event> events = eventRepository.findAll();
-        List<EventResponseDTO> eventResponseDTOList = new ArrayList<EventResponseDTO>();
-        for(Event event : events){
-            eventResponseDTOList.add(event.toEventResponseDto(event));
-        }
-        return eventResponseDTOList;
+        return toEventResponseDTOs(events);
     }
 
     @Override
-    public List<Event> get_event_all_by_category(String category) throws Exception {
-        return eventRepository.findAllByCategory(category);
+    public List<EventResponseDTO> get_event_all(String category) throws Exception {
+        List<Event> events = eventRepository.findAllByCategory(category);
+        return toEventResponseDTOs(events);
     }
 
     @Override
-    public void create(EventRequestDTO eventRequestDTO, EventResponseDTO eventResponseDTO, List<String> urls) throws Exception{
+    public void create(EventRequestDTO eventRequestDTO, List<String> urls) throws Exception{
         Event saveEvent = eventRequestDTO.toEventEntity(eventRequestDTO);
         eventRepository.save(saveEvent);
         List<String> urlList = new ArrayList<>();
@@ -48,5 +45,13 @@ public class EventServiceImpl implements EventService {
             imageRepository.save(image);
             urlList.add(image.getFileUrl());
         }
+    }
+
+    public List<EventResponseDTO> toEventResponseDTOs(List<Event> events){
+        List<EventResponseDTO> eventResponseDTOList = new ArrayList<>();
+        for(Event event : events){
+            eventResponseDTOList.add(event.toEventResponseDto(event));
+        }
+        return eventResponseDTOList;
     }
 }

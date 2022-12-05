@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
@@ -21,35 +22,22 @@ import java.util.List;
 class ApplicationTests {
 
     @Autowired
-    private EventService eventService;
-    @Autowired
     private EventRepository eventRepository;
-
-//    @Test
-//    void contextLoads() {
-//        eventController.
-//    }
 
     @Test
     void saveEventTest(){
-        //Date date = new Date(System.currentTimeMillis());
+        LocalDateTime date = LocalDateTime.now();
         Event event = Event.builder()
-                .title("test3")
-                .content("test3")
+                .title("test2")
+                .content("test2")
                 .longitude(10.101f)
                 .latitude(20.202f)
                 .checkNum(0)
+                .category("test2")
+                .createdAt(date)
                 .category("test3")
-                //.createdAt(date)
+                .createdAt(date)
                 .build();
         eventRepository.save(event);
     }
-
-//    @Test
-//    void get_event_all() throws Exception {
-//        List<Event> events = eventService.get_event_all();
-//        System.out.println(events);
-//    }
-
-
 }

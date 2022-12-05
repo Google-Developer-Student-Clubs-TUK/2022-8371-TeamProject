@@ -9,7 +9,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Entity
 @Getter
@@ -67,7 +70,6 @@ public class Event {
                 .latitude(event.getLatitude())
                 .longitude(event.getLongitude())
                 .checkNum(event.getCheckNum())
-                //.createdAt(new Date(System.currentTimeMillis()))
                 .createdAt(event.getCreatedAt())
                 .build();
     }
