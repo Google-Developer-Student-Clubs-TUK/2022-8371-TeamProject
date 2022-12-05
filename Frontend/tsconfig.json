@@ -16,9 +16,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".", //절대경로 설정
-    "paths": { "@/*": ["src/*"] } //절대경로 설정
+    "paths": { "@/*": ["src/*"] }, //절대경로 설정
     "jsxImportSource": "@emotion/react" // 이거 추가
-
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
