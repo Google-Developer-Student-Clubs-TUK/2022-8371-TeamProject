@@ -34,11 +34,13 @@ class ApplicationTests {
     void saveEventTest(){
         //Date date = new Date(System.currentTimeMillis());
         Event event = Event.builder()
-                .title("test3")
-                .content("test3")
+                .title("test2")
+                .content("test2")
                 .longitude(10.101f)
                 .latitude(20.202f)
                 .checkNum(0)
+                .category("test2")
+                .createdAt(date)
                 .category("test3")
                 //.createdAt(date)
                 .build();
