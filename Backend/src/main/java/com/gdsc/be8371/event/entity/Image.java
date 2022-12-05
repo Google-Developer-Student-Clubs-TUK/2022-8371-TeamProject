@@ -5,12 +5,14 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @ToString
 @Builder
 @AllArgsConstructor
+@EntityListeners(AutoCloseable.class)
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,18 @@ public class Image {
 
     @Column(nullable = false)
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdAt;
+
+    @Builder
+    public Image(String fileUrl, Event event){
+        this.fileUrl = fileUrl;
+        this.event = event;
+    }
+
+    @PrePersist
+    public void onPrePersist(){
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Image() {
 

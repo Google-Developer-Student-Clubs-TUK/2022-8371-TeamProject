@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import java.sql.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @Builder
@@ -19,9 +20,7 @@ public class EventRequestDTO {
     private String category;
     private float latitude;
     private float longitude;
-
-//    public Event toEntity(EventRequestDTO eventRequestDTO) {
-//        return Event.builder().build();
+    private List images;
 
     public Event toEventEntity(EventRequestDTO eventRequestDTO) {
         return Event.builder()
