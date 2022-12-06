@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -26,11 +24,12 @@ public class GCPService {
     public List<String> uploadFile(List<MultipartFile> multipartFile) throws IOException {
         log.info("start GCPService.uploadFile method");
         List<String> urlList = new ArrayList<>();
-
+        Map<String, String> newMetadata = new HashMap<>();
+        newMetadata.put("image", "jpeg");
         for(MultipartFile file: multipartFile) {
             String fileName = file.getOriginalFilename()+ UUID.randomUUID();
-            BlobId blobId = BlobId.of(bucketName, fileName);
-            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+            BlobId blobId = BlobId.of(bucketName,fileName);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
             storage.create(blobInfo, file.getBytes());
             urlList.add("https://storage.googleapis.com/" + bucketName + "/" + fileName);
         }
