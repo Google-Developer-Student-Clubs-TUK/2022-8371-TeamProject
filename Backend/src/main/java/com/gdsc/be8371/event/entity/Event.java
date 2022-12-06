@@ -9,13 +9,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.io.File;
 import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -67,6 +63,7 @@ public class Event {
     public EventResponseDTO toEventResponseDto(Event event,List<URL> images){
         log.info("start Event.toEventResponseDto method");
         return EventResponseDTO.builder()
+                .id(event.getId())
                 .title(event.getTitle())
                 .content(event.getContent())
                 .category(event.getCategory())
@@ -74,6 +71,7 @@ public class Event {
                 .longitude(event.getLongitude())
                 .checkNum(event.getCheckNum())
                 .createdAt(event.getCreatedAt())
+                .deadLine((int) ChronoUnit.HOURS.between(LocalDateTime.now(),event.getCreatedAt()))
                 .images(images)
                 .build();
     }

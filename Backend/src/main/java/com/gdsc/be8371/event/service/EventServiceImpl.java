@@ -46,8 +46,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void create(EventRequestDTO eventRequestDTO,
-                       List<String> urls) throws Exception{
+    public void update_CheckNum(int id) throws Exception {
+        log.info("start add_checkNum method");
+        eventRepository.updateCheckNum(id);
+    }
+
+    @Override
+    public void create(EventRequestDTO eventRequestDTO, List<String> urls) throws Exception{
         log.info("start EventService.create method");
         Event saveEvent = eventRequestDTO.toEventEntity(eventRequestDTO);
         eventRepository.save(saveEvent);
@@ -67,7 +72,7 @@ public class EventServiceImpl implements EventService {
         List<EventResponseDTO> eventResponseDTOList = new ArrayList<>();
 
         for(Event event : events){
-            List<URL> images = new ArrayList<URL>();
+            List<URL> images = new ArrayList<>();
             List<String> strUrls = imageRepository.findImagesByEventId(event.getId());
             for(String strUrl : strUrls){
                 URL url = new URL(strUrl);

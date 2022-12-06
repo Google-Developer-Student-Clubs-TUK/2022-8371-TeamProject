@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @ToString
 public class EventResponseDTO {
+    private Integer id;
     private String title;
     private String content;
     private String category;
@@ -23,5 +24,5 @@ public class EventResponseDTO {
     private int checkNum;
     private List<URL> images;
     private LocalDateTime createdAt;
-    private LocalDateTime deadLine;
+    private int deadLine;
 }

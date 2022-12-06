@@ -8,10 +8,14 @@ import com.gdsc.be8371.global.entity.ResponseFormat;
 import com.gdsc.be8371.global.entity.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
@@ -27,15 +31,15 @@ public class EventController {
     @GetMapping
     public ResponseEntity<ResponseFormat<List<EventResponseDTO>>> get_event_all(@RequestParam(required = false)String category) throws Exception {
         log.info("start EventController.get_event_all method");
+        log.info("category : "+category);
         List<EventResponseDTO> events = null;
-        System.out.println(category);
         if (category != null) {
             events = eventService.get_event_all(category);
         } else {
             events = eventService.get_event_all();
         }
         ResponseFormat<List<EventResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.GET_EVENT_SUCCESS, events);
-        return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+        return ResponseEntity.status(HttpStatus.OK).headers(createHeaders()).body(responseFormat);
     }
 
     //이벤트 생성
@@ -48,8 +52,20 @@ public class EventController {
         List<String> urls = gcpService.uploadFile(multipartFiles);
         eventService.create(eventRequestDTO, urls);
         ResponseFormat<EventResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.POST_EVENT_SUCCESS);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
+        return ResponseEntity.status(HttpStatus.CREATED).headers(createHeaders()).body(responseFormat);
     }
-    
+
+    @PutMapping
+    public ResponseEntity<ResponseFormat<EventResponseDTO>> add_event(@RequestParam int id) throws Exception {
+        log.info("start edit_event");
+        eventService.update_CheckNum(id);
+        ResponseFormat<EventResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.PUT_EVENT_SUCCESS);
+        return ResponseEntity.status(HttpStatus.OK).headers(createHeaders()).body(responseFormat);
+    }
+
+    public HttpHeaders createHeaders(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+        return headers;
+    }
 }
