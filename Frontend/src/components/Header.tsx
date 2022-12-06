@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { SideBar } from "./SideBar";
+import SideBarList from "./SideBarList";
 const Container = styled.div`
   background-color: #ffffff;
   height: 8vh;
@@ -107,7 +108,7 @@ function Header() {
         activeList={activeList}
         activeRegister={activeRegister}
       >
-        {activeList ? "재난목록" : "재난등록"}
+        {activeList ? <SideBarList /> : "재난등록"}
       </SideBar>
     </>
   );
