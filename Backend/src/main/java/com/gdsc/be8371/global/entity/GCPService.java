@@ -24,6 +24,7 @@ public class GCPService {
     private Storage storage;
 
     public List<String> uploadFile(List<MultipartFile> multipartFile) throws IOException {
+        log.info("start GCPService.uploadFile method");
         List<String> urlList = new ArrayList<>();
 
         for(MultipartFile file: multipartFile) {

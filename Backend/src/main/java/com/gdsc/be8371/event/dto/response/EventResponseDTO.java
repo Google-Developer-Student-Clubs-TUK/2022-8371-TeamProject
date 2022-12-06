@@ -3,6 +3,8 @@ package com.gdsc.be8371.event.dto.response;
 import com.gdsc.be8371.event.entity.Image;
 import lombok.*;
 
+import java.io.File;
+import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,7 +21,7 @@ public class EventResponseDTO {
     private float latitude;
     private float longitude;
     private int checkNum;
-    private List<Image> images;
+    private List<URL> images;
     private LocalDateTime createdAt;
     private LocalDateTime deadLine;
 }
