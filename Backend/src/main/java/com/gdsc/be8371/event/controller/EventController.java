@@ -26,6 +26,7 @@ public class EventController {
 
     @GetMapping
     public ResponseEntity<ResponseFormat<List<EventResponseDTO>>> get_event_all(@RequestParam(required = false)String category) throws Exception {
+        log.info("start EventController.get_event_all method");
         List<EventResponseDTO> events = null;
         System.out.println(category);
         if (category != null) {
@@ -40,6 +41,7 @@ public class EventController {
     //이벤트 생성
     @PostMapping
     public ResponseEntity<ResponseFormat<EventResponseDTO>> create_event(EventRequestDTO eventRequestDTO, @RequestPart("images") List<MultipartFile> multipartFiles) throws Exception {
+        log.info("start EventController.create_event method");
         if (multipartFiles == null) {
             log.warn("파일없음");
         }

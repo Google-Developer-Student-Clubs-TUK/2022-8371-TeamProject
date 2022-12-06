@@ -2,16 +2,20 @@ package com.gdsc.be8371.event.entity;
 
 import com.gdsc.be8371.event.dto.response.EventResponseDTO;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.File;
+import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +26,7 @@ import java.util.List;
 @DynamicInsert
 @ToString
 @EntityListeners(AuditingEntityListener.class)
+@Slf4j
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +51,6 @@ public class Event {
     @ColumnDefault("0")
     private int checkNum;
 
-//    @Column(nullable = false)
-//    private Date createdAt;
-
     @Column
     @CreatedDate
     private LocalDateTime createdAt;
@@ -62,7 +64,8 @@ public class Event {
         this.createdAt = LocalDateTime.now();
     }
 
-    public EventResponseDTO toEventResponseDto(Event event){
+    public EventResponseDTO toEventResponseDto(Event event,List<URL> images){
+        log.info("start Event.toEventResponseDto method");
         return EventResponseDTO.builder()
                 .title(event.getTitle())
                 .content(event.getContent())
@@ -71,6 +74,7 @@ public class Event {
                 .longitude(event.getLongitude())
                 .checkNum(event.getCheckNum())
                 .createdAt(event.getCreatedAt())
+                .images(images)
                 .build();
     }
 }

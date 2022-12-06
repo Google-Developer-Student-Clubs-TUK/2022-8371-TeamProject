@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Builder
 @Getter
 @ToString
+@Slf4j
 public class EventRequestDTO {
     private String title;
     private String content;
@@ -21,6 +23,7 @@ public class EventRequestDTO {
     private List images;
 
     public Event toEventEntity(EventRequestDTO eventRequestDTO) {
+        log.info("start EventRequestDTO.toEventEntity method");
         return Event.builder()
                 .title(eventRequestDTO.getTitle())
                 .category(eventRequestDTO.getCategory())

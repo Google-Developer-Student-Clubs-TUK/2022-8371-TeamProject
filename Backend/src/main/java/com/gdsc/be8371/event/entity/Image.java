@@ -21,19 +21,13 @@ public class Image {
     @Column(nullable = false)
     private String fileUrl;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
     @Column(nullable = false)
     @CreatedDate
     private LocalDateTime createdAt;
-
-    @Builder
-    public Image(String fileUrl, Event event){
-        this.fileUrl = fileUrl;
-        this.event = event;
-    }
 
     @PrePersist
     public void onPrePersist(){
