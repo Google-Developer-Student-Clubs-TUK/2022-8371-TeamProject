@@ -9,7 +9,7 @@ const FormContainer = Styled.form`
   align-items: center;
   width: 100%;
   flex-direction: column;
-  border-radius: 0px 0px 0px 20px;
+  border-radius: 0px 0px 0px 10px;
   overflow: hidden;
   background-color : white;
   flex : 1;
@@ -79,7 +79,7 @@ const SubmitBtn = Styled.button`
   justify-content: center;
   align-items: center;
   background-color : #425FC6;
-  border-radius: 0px 0px 0px 20px;
+  border-radius: 0px 0px 0px 10px;
   position : absolute;
   bottom : 0;
   border: 1px solid  #425FC6;

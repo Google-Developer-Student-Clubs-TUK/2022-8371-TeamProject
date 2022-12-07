@@ -1,0 +1,14 @@
+/* $tablet: 768px;
+$laptop: 1020px;
+$desktop: 1400px;
+
+html {
+  font-size: 62.5%;
+
+  @media (min-width: #{$laptop}) {
+    font-size: 82%;
+  }
+  @media (min-width: #{$desktop}) {
+    font-size: 100%;
+  }
+} */
