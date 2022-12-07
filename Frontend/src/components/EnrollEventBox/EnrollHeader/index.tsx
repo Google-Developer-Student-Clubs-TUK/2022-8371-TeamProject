@@ -11,6 +11,7 @@ const Container = Styled.div`
   flex-direction: row;
   border-radius: 20px 0px 0px 0px;
   overflow: hidden;
+
 `;
 
 const HeaderText = Styled.h2`
@@ -18,6 +19,7 @@ const HeaderText = Styled.h2`
   flex-grow : 1;
   text-align: center;
   padding-left : 3rem;
+  
 `;
 
 const BackBtn = Styled.button`

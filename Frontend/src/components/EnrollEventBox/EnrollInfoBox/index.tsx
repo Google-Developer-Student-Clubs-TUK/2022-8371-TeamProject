@@ -4,16 +4,21 @@ import titleimg1 from "@/assets/titleimg1.png";
 import titleimg2 from "@/assets/titleimg2.png";
 import test from "@/assets/test.png";
 
-const FormContainer = Styled.form`
+const Test111 = Styled.form`
+  display: flex;
+  overflow-x : hidden;
+  overflow-y : scroll;
+  position : relative;
+`;
+
+const FormContainer = Styled.div`
   display: flex;
   align-items: center;
   width: 100%;
   flex-direction: column;
   border-radius: 0px 0px 0px 10px;
-  overflow: hidden;
   background-color : white;
   flex : 1;
-  position : relative;
 `;
 
 const TitleBox = Styled.div`
@@ -22,6 +27,7 @@ const TitleBox = Styled.div`
   align-items: center;
   flex-direction: row;
   margin: 10px 0 20px;
+  
 `;
 
 const TitleLabel = Styled.label`
@@ -31,13 +37,11 @@ const TitleLabel = Styled.label`
 `;
 
 const InputLabel = Styled.label`
-  font-size : 1rem;
   color:black;
   font-weight : bold;
 `;
 
 const InputBox = Styled.input`
-  font-size : 1rem;
   width : 18rem;
   height : 1.5rem;
   padding: 10px 10px;
@@ -80,7 +84,7 @@ const SubmitBtn = Styled.button`
   align-items: center;
   background-color : #425FC6;
   border-radius: 0px 0px 0px 10px;
-  position : absolute;
+  position : fixed;
   bottom : 0;
   border: 1px solid  #425FC6;
   cursor : pointer;
@@ -116,35 +120,37 @@ const EnrollInfoBox = () => {
   };
 
   return (
-    <FormContainer onSubmit={onSubmit}>
-      <TitleBox>
-        <img src={titleimg1} />
-        <TitleLabel>Basic Info</TitleLabel>
-      </TitleBox>
+    <Test111 onSubmit={onSubmit}>
+      <FormContainer>
+        <TitleBox>
+          <img src={titleimg1} />
+          <TitleLabel>Basic Info</TitleLabel>
+        </TitleBox>
 
-      <InputLabel>재난 상황</InputLabel>
-      <InputBox id="eventCategory" onChange={handleInput1} />
+        <InputLabel>재난 상황</InputLabel>
+        <InputBox id="eventCategory" onChange={handleInput1} />
 
-      <InputLabel>위치</InputLabel>
-      <InputBox id="eventLocation" onChange={handleInput2} />
+        <InputLabel>위치</InputLabel>
+        <InputBox id="eventLocation" onChange={handleInput2} />
 
-      <TitleBox>
-        <img src={titleimg2} />
-        <TitleLabel>Image Info</TitleLabel>
-      </TitleBox>
+        <TitleBox>
+          <img src={titleimg2} />
+          <TitleLabel>Image Info</TitleLabel>
+        </TitleBox>
 
-      <ImageInputBtn type="button" onClick={handleClick}>
-        <img src={test} />
-      </ImageInputBtn>
-      <ImageInput
-        type="file"
-        id="eventImgs"
-        ref={hiddenFileInput}
-        onChange={handleChange}
-      ></ImageInput>
+        <ImageInputBtn type="button" onClick={handleClick}>
+          <img src={test} />
+        </ImageInputBtn>
+        <ImageInput
+          type="file"
+          id="eventImgs"
+          ref={hiddenFileInput}
+          onChange={handleChange}
+        ></ImageInput>
+      </FormContainer>
 
       <SubmitBtn type="submit">등록하시겠습니까?</SubmitBtn>
-    </FormContainer>
+    </Test111>
   );
 };
 
