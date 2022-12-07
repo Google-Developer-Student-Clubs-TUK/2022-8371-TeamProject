@@ -4,11 +4,12 @@ import titleimg1 from "@/assets/titleimg1.png";
 import titleimg2 from "@/assets/titleimg2.png";
 import test from "@/assets/test.png";
 
-const Test111 = Styled.form`
+const Container = Styled.form`
   display: flex;
   overflow-x : hidden;
   overflow-y : scroll;
   position : relative;
+  flex : 1;
 `;
 
 const FormContainer = Styled.div`
@@ -18,7 +19,7 @@ const FormContainer = Styled.div`
   flex-direction: column;
   border-radius: 0px 0px 0px 10px;
   background-color : white;
-  flex : 1;
+
 `;
 
 const TitleBox = Styled.div`
@@ -90,6 +91,26 @@ const SubmitBtn = Styled.button`
   cursor : pointer;
 `;
 
+const Select = Styled.select`
+  width : 15rem;
+  height : 3rem;
+  padding: 1px 10px;
+  border-radius: 8px;
+  border: 1px solid #BDBDBD;
+  background-color : white;
+  color : gray;
+  margin: 0 0 40px;
+  box-shadow: 2px 2px 2px #BDBDBD;
+  outline:none;
+  text-align:center;
+  
+  option {
+    color: black;
+    background: white;
+
+  }
+`;
+
 const EnrollInfoBox = () => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [input1, setInput1] = useState("");
@@ -104,7 +125,7 @@ const EnrollInfoBox = () => {
     console.log(fileUploaded);
   };
 
-  const handleInput1 = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput1 = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInput1(e.target.value);
     console.log(input1);
   };
@@ -120,7 +141,7 @@ const EnrollInfoBox = () => {
   };
 
   return (
-    <Test111 onSubmit={onSubmit}>
+    <Container onSubmit={onSubmit}>
       <FormContainer>
         <TitleBox>
           <img src={titleimg1} />
@@ -128,7 +149,15 @@ const EnrollInfoBox = () => {
         </TitleBox>
 
         <InputLabel>재난 상황</InputLabel>
-        <InputBox id="eventCategory" onChange={handleInput1} />
+        <Select id="eventCategory" onChange={handleInput1}>
+          <option value="" disabled>
+            Choose one
+          </option>
+          <option value="1">홍수</option>
+          <option value="2">지진</option>
+          <option value="3">태풍</option>
+          <option value="4">화재</option>
+        </Select>
 
         <InputLabel>위치</InputLabel>
         <InputBox id="eventLocation" onChange={handleInput2} />
@@ -150,7 +179,7 @@ const EnrollInfoBox = () => {
       </FormContainer>
 
       <SubmitBtn type="submit">등록하시겠습니까?</SubmitBtn>
-    </Test111>
+    </Container>
   );
 };
 
