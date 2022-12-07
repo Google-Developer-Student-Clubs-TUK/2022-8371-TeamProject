@@ -5,21 +5,19 @@ import titleimg2 from "@/assets/titleimg2.png";
 import test from "@/assets/test.png";
 
 const Container = Styled.form`
-  display: flex;
+  height : 80vh;
   overflow-x : hidden;
   overflow-y : scroll;
-  position : relative;
-  flex : 1;
 `;
 
 const FormContainer = Styled.div`
   display: flex;
+  position : relative;
   align-items: center;
   width: 100%;
   flex-direction: column;
   border-radius: 0px 0px 0px 10px;
   background-color : white;
-
 `;
 
 const TitleBox = Styled.div`
@@ -33,7 +31,7 @@ const TitleBox = Styled.div`
 
 const TitleLabel = Styled.label`
   font-size : 1.6rem;
-  color:black;
+  color : black;
   margin-left : 10px;
 `;
 
