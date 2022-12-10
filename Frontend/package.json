@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@types/node": "^18.11.10",
-    "@emotion/react": "^11.10.5",
     "@react-google-maps/api": "^2.17.0",
     "@types/react-bootstrap": "^0.32.32",
     "bootstrap": "^5.2.3",
