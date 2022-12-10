@@ -4,16 +4,20 @@ import titleimg1 from "@/assets/titleimg1.png";
 import titleimg2 from "@/assets/titleimg2.png";
 import test from "@/assets/test.png";
 
-const FormContainer = Styled.form`
+const Container = Styled.form`
+  height : 80vh;
+  overflow-x : hidden;
+  overflow-y : scroll;
+`;
+
+const FormContainer = Styled.div`
   display: flex;
+  position : relative;
   align-items: center;
   width: 100%;
   flex-direction: column;
-  border-radius: 0px 0px 0px 20px;
-  overflow: hidden;
+  border-radius: 0px 0px 0px 10px;
   background-color : white;
-  flex : 1;
-  position : relative;
 `;
 
 const TitleBox = Styled.div`
@@ -22,22 +26,21 @@ const TitleBox = Styled.div`
   align-items: center;
   flex-direction: row;
   margin: 10px 0 20px;
+  
 `;
 
 const TitleLabel = Styled.label`
   font-size : 1.6rem;
-  color:black;
+  color : black;
   margin-left : 10px;
 `;
 
 const InputLabel = Styled.label`
-  font-size : 1rem;
   color:black;
   font-weight : bold;
 `;
 
 const InputBox = Styled.input`
-  font-size : 1rem;
   width : 18rem;
   height : 1.5rem;
   padding: 10px 10px;
@@ -79,11 +82,31 @@ const SubmitBtn = Styled.button`
   justify-content: center;
   align-items: center;
   background-color : #425FC6;
-  border-radius: 0px 0px 0px 20px;
-  position : absolute;
+  border-radius: 0px 0px 0px 10px;
+  position : fixed;
   bottom : 0;
   border: 1px solid  #425FC6;
   cursor : pointer;
+`;
+
+const Select = Styled.select`
+  width : 15rem;
+  height : 3rem;
+  padding: 1px 10px;
+  border-radius: 8px;
+  border: 1px solid #BDBDBD;
+  background-color : white;
+  color : gray;
+  margin: 0 0 40px;
+  box-shadow: 2px 2px 2px #BDBDBD;
+  outline:none;
+  text-align:center;
+  
+  option {
+    color: black;
+    background: white;
+
+  }
 `;
 
 const EnrollInfoBox = () => {
@@ -100,7 +123,7 @@ const EnrollInfoBox = () => {
     console.log(fileUploaded);
   };
 
-  const handleInput1 = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput1 = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInput1(e.target.value);
     console.log(input1);
   };
@@ -116,35 +139,45 @@ const EnrollInfoBox = () => {
   };
 
   return (
-    <FormContainer onSubmit={onSubmit}>
-      <TitleBox>
-        <img src={titleimg1} />
-        <TitleLabel>Basic Info</TitleLabel>
-      </TitleBox>
+    <Container onSubmit={onSubmit}>
+      <FormContainer>
+        <TitleBox>
+          <img src={titleimg1} />
+          <TitleLabel>Basic Info</TitleLabel>
+        </TitleBox>
 
-      <InputLabel>재난 상황</InputLabel>
-      <InputBox id="eventCategory" onChange={handleInput1} />
+        <InputLabel>재난 상황</InputLabel>
+        <Select id="eventCategory" onChange={handleInput1}>
+          <option value="" disabled>
+            Choose one
+          </option>
+          <option value="1">홍수</option>
+          <option value="2">지진</option>
+          <option value="3">태풍</option>
+          <option value="4">화재</option>
+        </Select>
 
-      <InputLabel>위치</InputLabel>
-      <InputBox id="eventLocation" onChange={handleInput2} />
+        <InputLabel>위치</InputLabel>
+        <InputBox id="eventLocation" onChange={handleInput2} />
 
-      <TitleBox>
-        <img src={titleimg2} />
-        <TitleLabel>Image Info</TitleLabel>
-      </TitleBox>
+        <TitleBox>
+          <img src={titleimg2} />
+          <TitleLabel>Image Info</TitleLabel>
+        </TitleBox>
 
-      <ImageInputBtn type="button" onClick={handleClick}>
-        <img src={test} />
-      </ImageInputBtn>
-      <ImageInput
-        type="file"
-        id="eventImgs"
-        ref={hiddenFileInput}
-        onChange={handleChange}
-      ></ImageInput>
+        <ImageInputBtn type="button" onClick={handleClick}>
+          <img src={test} />
+        </ImageInputBtn>
+        <ImageInput
+          type="file"
+          id="eventImgs"
+          ref={hiddenFileInput}
+          onChange={handleChange}
+        ></ImageInput>
+      </FormContainer>
 
       <SubmitBtn type="submit">등록하시겠습니까?</SubmitBtn>
-    </FormContainer>
+    </Container>
   );
 };
 

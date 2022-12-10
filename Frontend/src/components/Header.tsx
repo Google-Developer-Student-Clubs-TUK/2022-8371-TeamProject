@@ -3,6 +3,7 @@ import logo from "../assets/logo.png";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import EnrollEventBox from "./EnrollEventBox";
 const Container = styled.div`
   background-color: #ffffff;
   height: 8vh;
@@ -127,7 +128,7 @@ function Header() {
         activeList={activeList}
         activeRegister={activeRegister}
       >
-        {activeList ? "재난목록" : "재난등록"}
+        {activeList ? "재난목록" : <EnrollEventBox />}
       </SideBar>
     </>
   );
