@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { SideBar } from "./SideBar";
 import SideBarList from "./SideBarList";
+import EnrollEventBox from "./EnrollEventBox";
+
 const Container = styled.div`
   background-color: #ffffff;
   height: 8vh;
@@ -108,7 +110,9 @@ function Header() {
         activeList={activeList}
         activeRegister={activeRegister}
       >
-        {activeList ? <SideBarList /> : "재난등록"}
+
+        {activeList ? <SideBarList/> : <EnrollEventBox />}
+
       </SideBar>
     </>
   );
