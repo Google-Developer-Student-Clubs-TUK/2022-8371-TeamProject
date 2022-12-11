@@ -1,25 +1,19 @@
 package com.gdsc.be8371.event.service;
 
 import com.gdsc.be8371.event.dto.request.EventRequestDTO;
+import com.gdsc.be8371.event.dto.response.EventListResponseDTO;
 import com.gdsc.be8371.event.dto.response.EventResponseDTO;
 import com.gdsc.be8371.event.entity.Event;
 import com.gdsc.be8371.event.entity.Image;
 import com.gdsc.be8371.event.repository.EventRepository;
 import com.gdsc.be8371.event.repository.ImageRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -32,17 +26,32 @@ public class EventServiceImpl implements EventService {
     private ImageRepository imageRepository;
 
     @Override
-    public List<EventResponseDTO> get_event_all() throws Exception {
+    public List<EventListResponseDTO> get_event_all() throws Exception {
         log.info("start EventService.get_event_all method");
         List<Event> events = eventRepository.findAll();
-        return toEventResponseDTOs(events);
+        return toEventListResponseDTOs(events);
     }
 
     @Override
-    public List<EventResponseDTO> get_event_all(String category) throws Exception {
+    public List<EventListResponseDTO> get_event_all(String category) throws Exception {
         log.info("start EventService.get_event_all(category) method");
         List<Event> events = eventRepository.findAllByCategory(category);
-        return toEventResponseDTOs(events);
+        return toEventListResponseDTOs(events);
+    }
+
+    @Override
+    public EventResponseDTO get_event_by_id(Integer id) throws Exception {
+        log.info("start get_event_by_id method");
+        Event event = eventRepository.findById(id).get();
+        log.info(event.toString());
+
+        List<URL> images = new ArrayList<>();
+        List<String> strUrls = imageRepository.findImagesByEventId(event.getId());
+        for(String strUrl : strUrls){
+            URL url = new URL(strUrl);
+            images.add(url);
+        }
+        return event.toEventResponseDto(event,images);
     }
 
     @Override
@@ -67,18 +76,18 @@ public class EventServiceImpl implements EventService {
         }
     }
 
-    public List<EventResponseDTO> toEventResponseDTOs(List<Event> events) throws Exception{
-        log.info("start EventService.toEventResponseDTOs");
-        List<EventResponseDTO> eventResponseDTOList = new ArrayList<>();
+    public List<EventListResponseDTO> toEventListResponseDTOs(List<Event> events) throws Exception{
+        log.info("start EventService.toEventListResponseDTOs");
+        List<EventListResponseDTO> eventResponseDTOList = new ArrayList<>();
 
         for(Event event : events){
-            List<URL> images = new ArrayList<>();
-            List<String> strUrls = imageRepository.findImagesByEventId(event.getId());
-            for(String strUrl : strUrls){
-                URL url = new URL(strUrl);
-                images.add(url);
-            }
-            eventResponseDTOList.add(event.toEventResponseDto(event,images));
+//            List<URL> images = new ArrayList<>();
+//            List<String> strUrls = imageRepository.findImagesByEventId(event.getId());
+//            for(String strUrl : strUrls){
+//                URL url = new URL(strUrl);
+//                images.add(url);
+//            }
+            eventResponseDTOList.add(event.toEventListResponseDto(event));
         }
         return eventResponseDTOList;
     }
