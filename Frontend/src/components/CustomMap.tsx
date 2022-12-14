@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   GoogleMap,
   InfoWindow,
@@ -11,89 +11,35 @@ import CustomMarker2 from "../assets/marker2.png";
 import CurrentButton from "../assets/current.png";
 
 import Loading from "./Loading";
-
-const kakao = (window as any).kakao;
+import axios from "axios";
+import { useQuery } from "react-query";
 
 const containerStyle = {
   width: "100vw",
   height: "92vh",
 };
 
-const markers = [
-  {
-    id: 1,
-    title: "정왕동 화재 발생",
-    content: "여기 지금 불났어요",
-    category: "화재",
-    latitude: 37.2,
-    longitude: 126.7323008,
-    checkNum: 25,
-    images: [
-      "https://storage.googleapis.com/gdsc-8371-storage/IMG_CF348D372D38-1.jpegd3fd1631-2c2c-405a-abce-7116ca4c50fa",
-    ],
-    createdAt: "2022-12-11T15:37:48.999937",
-
-    deadLine: 0,
-  },
-  {
-    id: 2,
-    title: "정왕동 화재 발생",
-    content: "여기 지금 불났어요",
-    category: "화재",
-    latitude: 37.3443935,
-    longitude: 126.7323008,
-    checkNum: 25,
-    images: [
-      "https://storage.googleapis.com/gdsc-8371-storage/IMG_CF348D372D38-1.jpegd3fd1631-2c2c-405a-abce-7116ca4c50fa",
-    ],
-    createdAt: "2022-12-11T15:37:48.999937",
-    deadLine: 0,
-  },
-  {
-    id: 3,
-    title: "정왕동 화재 발생",
-    content: "여기 지금 불났어요",
-    category: "화재",
-    latitude: 37.4,
-    longitude: 128.7323008,
-    checkNum: 3,
-    images: [
-      "https://storage.googleapis.com/gdsc-8371-storage/IMG_CF348D372D38-1.jpegd3fd1631-2c2c-405a-abce-7116ca4c50fa",
-    ],
-    createdAt: "2022-12-11T15:37:48.999937",
-    deadLine: 0,
-  },
-  {
-    id: 4,
-    title: "정왕동 화재 발생",
-    content: "여기 지금 불났어요",
-    category: "화재",
-    latitude: 37.6,
-    longitude: 129.0323008,
-    checkNum: 25,
-    images: [
-      "https://storage.googleapis.com/gdsc-8371-storage/IMG_CF348D372D38-1.jpegd3fd1631-2c2c-405a-abce-7116ca4c50fa",
-    ],
-    createdAt: "2022-12-11T15:37:48.999937",
-    deadLine: 0,
-  },
-];
+const getDisasterWithAxios = async () => {
+  const { data } = await axios.get("http://localhost:8080/api/v1/event");
+  return data;
+};
 
 function CustomMap() {
+  useEffect(() => {
+    getLocation();
+  }, []);
   const [loading, setLoading] = useState(false);
+
+  const [markers, setMarker] = useState([{}]);
+
+  const [center, setCenter] = useState({ lat: 126, lng: 37 });
+
+  const [activeMarker, setActiveMarker] = useState(null);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyCztP7qUELLnmvw2vE3cvnkCanUUOffs8E",
   });
-
-  useEffect(() => {
-    getLocation();
-  }, []);
-
-  const [center, setCenter] = useState({ lat: 126, lng: 37 });
-  console.log(center);
-  const [activeMarker, setActiveMarker] = useState(null);
 
   const handleActiveMarker = (marker: any) => {
     if (marker === activeMarker) {
@@ -102,13 +48,21 @@ function CustomMap() {
     setActiveMarker(marker);
   };
 
-  const handleOnLoad = (map: any) => {
-    const bounds = new google.maps.LatLngBounds();
-    markers.forEach((data) =>
-      bounds.extend({ lat: data.latitude, lng: data.longitude })
-    );
-    map.fitBounds(bounds);
-  };
+  const { isLoading, data, isError } = useQuery(
+    "Disasters",
+    getDisasterWithAxios,
+    {
+      retry: 3,
+      onSuccess: (data) => {
+        // 성공시 호출
+        console.log(data.result);
+
+        setMarker(data.result);
+        console.log(markers);
+      },
+    }
+  );
+
   const [Add, setAddress] = useState("");
 
   function getLocation() {
@@ -122,6 +76,7 @@ function CustomMap() {
 
           await setCenter({ lat: lat, lng: lng });
           await setLoading(false);
+          const kakao = await (window as any).kakao;
 
           let geocoder = await new kakao.maps.services.Geocoder();
           let coord = await new kakao.maps.LatLng(lat, lng);
@@ -170,17 +125,13 @@ function CustomMap() {
         >
           <img src={CurrentButton} alt="CurrentButton" />
         </button>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={15}
-          onLoad={handleOnLoad}
-        >
-          {markers.map((data) => (
+        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+          {markers.map((data: any) => (
             <Marker
               icon={data.checkNum >= 5 ? CustomMarker1 : CustomMarker2}
               position={{ lat: data.latitude, lng: data.longitude }}
               onClick={() => handleActiveMarker(data.id)}
+              key={data.id}
             >
               {activeMarker === data.id ? (
                 <InfoWindow onCloseClick={() => setActiveMarker(null)}>

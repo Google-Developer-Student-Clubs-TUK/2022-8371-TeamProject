@@ -11,7 +11,7 @@ const Container = styled.div`
   background-color: #ffffff;
   height: 8vh;
   display: flex;
-  flex-direction: row
+  flex-direction: row;
   justify-contents: center;
   aligh-items: center;
 `;
@@ -60,7 +60,7 @@ const NameBox = styled.div<{
 
 const Slider = styled.div<{ active: boolean }>`
   height: 92vh;
-  width: 50vw
+  width: 50vw;
   background-color: #aacd32;
   border-radius: 3px;
   transition: all 0.2s ease-in-out;
@@ -110,9 +110,7 @@ function Header() {
         activeList={activeList}
         activeRegister={activeRegister}
       >
-
-        {activeList ? <SideBarList/> : <EnrollEventBox />}
-
+        {activeList ? <SideBarList /> : <EnrollEventBox />}
       </SideBar>
     </>
   );

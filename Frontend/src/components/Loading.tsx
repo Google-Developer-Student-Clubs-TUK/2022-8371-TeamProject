@@ -3,7 +3,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 
 function Loading() {
   return (
-    <div class="contentWrap">
+    <div className="contentWrap">
       <div
         style={{
           position: "fixed",
