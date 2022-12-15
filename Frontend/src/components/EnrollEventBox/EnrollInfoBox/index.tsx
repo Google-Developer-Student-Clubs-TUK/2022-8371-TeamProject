@@ -3,6 +3,7 @@ import Styled from "styled-components";
 import titleimg1 from "@/assets/titleimg1.png";
 import titleimg2 from "@/assets/titleimg2.png";
 import test from "@/assets/test.png";
+import axios from "axios";
 
 const Container = Styled.form`
   height : 80vh;
@@ -42,7 +43,7 @@ const InputLabel = Styled.label`
 
 const InputBox = Styled.input`
   width : 18rem;
-  height : 1.5rem;
+  height : 1rem;
   padding: 10px 10px;
   border-radius: 8px;
   border: 1px solid #BDBDBD;
@@ -56,6 +57,7 @@ const InputBox = Styled.input`
 const ImageInputBtn = Styled.button`
   background-color : white;
   outline : none;
+  margin-bottom : 30px;
   border : 0;
   &:focus {
     outline:none;
@@ -91,7 +93,7 @@ const SubmitBtn = Styled.button`
 
 const Select = Styled.select`
   width : 15rem;
-  height : 3rem;
+  height : 2rem;
   padding: 1px 10px;
   border-radius: 8px;
   border: 1px solid #BDBDBD;
@@ -109,10 +111,29 @@ const Select = Styled.select`
   }
 `;
 
+interface EventData {
+  title: string;
+  content: string;
+  category: string;
+  images: File;
+  latitude: number;
+  longitude: number;
+}
+
+interface CurrentLocation {
+  latitude: number;
+  longitude: number;
+}
+
 const EnrollInfoBox = () => {
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [input1, setInput1] = useState("");
   const [input2, setInput2] = useState("");
+  const [inputImg, setInputImg] = useState<File>();
+  const [loc, setLoc] = useState<CurrentLocation>({
+    latitude: 0,
+    longitude: 0,
+  });
 
   const handleClick = () => {
     hiddenFileInput.current!.click();
@@ -120,22 +141,75 @@ const EnrollInfoBox = () => {
 
   const handleChange = (e: any) => {
     const fileUploaded = e.target.files[0];
-    console.log(fileUploaded);
+    setInputImg(fileUploaded);
   };
 
-  const handleInput1 = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setInput1(e.target.value);
-    console.log(input1);
-  };
-  const handleInput2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput2(e.target.value);
-    console.log(input2);
-  };
+  // const handleInput1 = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setInput1(e.target.value);
+  //   console.log(input1);
+  // };
+  // const handleInput2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInput2(e.target.value);
+  //   console.log(input2);
+  // };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.currentTarget.eventCategory.value);
-    console.log(e.currentTarget.eventLocation.value);
+    const postEventData: EventData = {
+      title: e.currentTarget.eventTitle.value,
+      content: e.currentTarget.eventContent.value,
+      category: e.currentTarget.eventCategory.value,
+      images: inputImg!,
+      latitude: loc!.latitude,
+      longitude: loc!.longitude,
+    };
+
+    console.log(postEventData);
+
+    await axios
+      .post("/api/v1/event", postEventData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // const config = {
+  //   headers: {
+  //     "Access-Control-Allow-Origin": "*",
+  //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+  //   },
+  // };
+
+  const locationHandle = () => {
+    // const infoWindow = new google.maps.InfoWindow();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: GeolocationPosition) => {
+          const pos: CurrentLocation = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+
+          setLoc(pos);
+          console.log(pos, "location info success");
+
+          // infoWindow.setPosition(pos);
+          // infoWindow.setContent("Location found.");
+          // infoWindow.open(map);
+          // map.setCenter(pos);
+        },
+        () => {
+          // handleLocationError(true, infoWindow, map.getCenter()!);
+          console.log("()?");
+        }
+      );
+    } else {
+      // Browser doesn't support Geolocation
+      console.log("else");
+    }
   };
 
   return (
@@ -147,18 +221,31 @@ const EnrollInfoBox = () => {
         </TitleBox>
 
         <InputLabel>재난 상황</InputLabel>
-        <Select id="eventCategory" onChange={handleInput1}>
+        <Select id="eventCategory">
           <option value="" disabled>
             Choose one
           </option>
-          <option value="1">홍수</option>
-          <option value="2">지진</option>
-          <option value="3">태풍</option>
-          <option value="4">화재</option>
+          <option value="홍수">홍수</option>
+          <option value="지진">지진</option>
+          <option value="태풍">태풍</option>
+          <option value="화재">화재</option>
         </Select>
 
+        <InputLabel>제목</InputLabel>
+        <InputBox id="eventTitle" />
+
+        <InputLabel>내용</InputLabel>
+        <InputBox id="eventContent" />
+
         <InputLabel>위치</InputLabel>
-        <InputBox id="eventLocation" onChange={handleInput2} />
+        <button type="button" onClick={locationHandle}>
+          location
+        </button>
+        {loc.latitude === 0 ? (
+          <span style={{ marginBottom: 30 }}>x</span>
+        ) : (
+          <span style={{ marginBottom: 30 }}>o</span>
+        )}
 
         <TitleBox>
           <img src={titleimg2} />
