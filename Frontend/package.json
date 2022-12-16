@@ -27,6 +27,5 @@
     "@vitejs/plugin-react": "^2.2.0",
     "typescript": "^4.6.4",
     "vite": "^3.2.3"
-  },
-  "proxy": "http://localhost:8080"
+  }
 }

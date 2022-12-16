@@ -3,6 +3,9 @@ import Styled from "styled-components";
 import titleimg1 from "@/assets/titleimg1.png";
 import titleimg2 from "@/assets/titleimg2.png";
 import test from "@/assets/test.png";
+import locationimg from "@/assets/locationimg.png";
+import beforecheck from "@/assets/beforecheck.png";
+import aftercheck from "@/assets/aftercheck.png";
 import axios from "axios";
 
 const Container = Styled.form`
@@ -111,6 +114,34 @@ const Select = Styled.select`
   }
 `;
 
+const LocationBtn = Styled.button`
+  all: unset;
+  display : flex;
+  width : fit;
+  height : fit;
+  border-radius : 20px;
+
+  padding : 1rem;
+  background-color : white;
+  justify-content: center;
+  align-items: center;
+  outline:none;
+  &:hover {
+    cursor : pointer;
+  }
+  &:focus {
+    outline:none;
+  }
+`;
+
+const CheckLocation = Styled.img`
+  display : flex;
+  width : 2rem;
+  height : 2rem;
+  justify-content: center;
+  align-items: center;
+`;
+
 interface EventData {
   title: string;
   content: string;
@@ -134,6 +165,7 @@ const EnrollInfoBox = () => {
     latitude: 0,
     longitude: 0,
   });
+  const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
     hiddenFileInput.current!.click();
@@ -163,7 +195,6 @@ const EnrollInfoBox = () => {
       latitude: loc!.latitude,
       longitude: loc!.longitude,
     };
-
     console.log(postEventData);
 
     await axios
@@ -176,6 +207,21 @@ const EnrollInfoBox = () => {
       });
   };
 
+  // const getTest = async () => {
+  //   await axios
+  //     .get("api/v1/event")
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // };
+
+  // const eventID = 1;
+  // const putTest = async () => {
+  //   await axios
+  //     .put(`api/v1/event?id=${eventID}`)
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // };
+
   // const config = {
   //   headers: {
   //     "Access-Control-Allow-Origin": "*",
@@ -184,31 +230,27 @@ const EnrollInfoBox = () => {
   // };
 
   const locationHandle = () => {
-    // const infoWindow = new google.maps.InfoWindow();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position: GeolocationPosition) => {
-          const pos: CurrentLocation = {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          };
+    setLoading(true);
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position: GeolocationPosition) => {
+            const pos: CurrentLocation = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
 
-          setLoc(pos);
-          console.log(pos, "location info success");
-
-          // infoWindow.setPosition(pos);
-          // infoWindow.setContent("Location found.");
-          // infoWindow.open(map);
-          // map.setCenter(pos);
-        },
-        () => {
-          // handleLocationError(true, infoWindow, map.getCenter()!);
-          console.log("()?");
-        }
-      );
-    } else {
-      // Browser doesn't support Geolocation
-      console.log("else");
+            setLoc(pos);
+            setLoading(false);
+            console.log(pos, "location info success");
+          }
+        );
+      } else {
+        // Browser doesn't support Geolocation
+        console.log("else");
+      }
+    } catch (err) {
+      console.log("try catch error");
     }
   };
 
@@ -238,14 +280,27 @@ const EnrollInfoBox = () => {
         <InputBox id="eventContent" />
 
         <InputLabel>위치</InputLabel>
-        <button type="button" onClick={locationHandle}>
-          location
-        </button>
-        {loc.latitude === 0 ? (
-          <span style={{ marginBottom: 30 }}>x</span>
-        ) : (
-          <span style={{ marginBottom: 30 }}>o</span>
-        )}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <LocationBtn type="button" onClick={locationHandle}>
+            <img src={locationimg}></img>
+          </LocationBtn>
+
+          {loc.latitude === 0 ? (
+            <>
+              {loading ? "<Loading /> " : null}
+              <CheckLocation src={beforecheck} />
+            </>
+          ) : (
+            <CheckLocation src={aftercheck} />
+          )}
+        </div>
 
         <TitleBox>
           <img src={titleimg2} />
