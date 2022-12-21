@@ -12,7 +12,7 @@ import {
 import checkimg from "@/assets/checkimg.png";
 import axios from "axios";
 
-const EventDetailInfo = (props: any) => {
+const EventDetailBox = (props: any) => {
   const putTest = async () => {
     await axios
       .put(`api/v1/event?id=${props.data.id}`)
@@ -42,4 +42,4 @@ const EventDetailInfo = (props: any) => {
   );
 };
 
-export default EventDetailInfo;
+export default EventDetailBox;
