@@ -9,9 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/node": "^18.11.10",
     "@react-google-maps/api": "^2.17.0",
+    "@types/node": "^18.11.10",
     "@types/react-bootstrap": "^0.32.32",
+    "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "framer-motion": "^7.6.18",
     "react": "^18.2.0",
