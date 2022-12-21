@@ -56,8 +56,7 @@ function CustomMap() {
       onSuccess: (data) => {
         // 성공시 호출
         console.log(data.result);
-
-        setMarker(data.result);
+        setMarker([...data.result]);
         console.log(markers);
       },
     }
@@ -135,7 +134,7 @@ function CustomMap() {
             >
               {activeMarker === data.id ? (
                 <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                  <div>{data.title}</div>
+                  <div>{data.id}</div>
                 </InfoWindow>
               ) : null}
             </Marker>
