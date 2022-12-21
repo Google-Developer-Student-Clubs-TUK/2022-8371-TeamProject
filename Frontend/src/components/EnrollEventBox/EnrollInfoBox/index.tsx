@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Styled from "styled-components";
+
 import titleimg1 from "@/assets/titleimg1.png";
 import titleimg2 from "@/assets/titleimg2.png";
 import test from "@/assets/test.png";
@@ -7,140 +7,21 @@ import locationimg from "@/assets/locationimg.png";
 import beforecheck from "@/assets/beforecheck.png";
 import aftercheck from "@/assets/aftercheck.png";
 import axios from "axios";
-
-const Container = Styled.form`
-  height : 80vh;
-  overflow-x : hidden;
-  overflow-y : scroll;
-`;
-
-const FormContainer = Styled.div`
-  display: flex;
-  position : relative;
-  align-items: center;
-  width: 100%;
-  flex-direction: column;
-  border-radius: 0px 0px 0px 10px;
-  background-color : white;
-`;
-
-const TitleBox = Styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  margin: 10px 0 20px;
-  
-`;
-
-const TitleLabel = Styled.label`
-  font-size : 1.6rem;
-  color : black;
-  margin-left : 10px;
-`;
-
-const InputLabel = Styled.label`
-  color:black;
-  font-weight : bold;
-`;
-
-const InputBox = Styled.input`
-  width : 18rem;
-  height : 1rem;
-  padding: 10px 10px;
-  border-radius: 8px;
-  border: 1px solid #BDBDBD;
-  background-color : white;
-  color : black;
-  margin: 0 0 40px;
-  box-shadow: 2px 2px 2px #BDBDBD;
-  outline:none;
-`;
-
-const ImageInputBtn = Styled.button`
-  background-color : white;
-  outline : none;
-  margin-bottom : 30px;
-  border : 0;
-  &:focus {
-    outline:none;
-  }
-  &:hover {
-    border : 0;
-    outline:none;
-  }
-`;
-
-const ImageInput = Styled.input`
-  outline : none;
-  display : none;
-  &:focus {
-    outline:none;
-  }
-`;
-
-const SubmitBtn = Styled.button`
-  all: unset;
-  display : flex;
-  width : 100%;
-  height : 3rem;
-  justify-content: center;
-  align-items: center;
-  background-color : #425FC6;
-  border-radius: 0px 0px 0px 10px;
-  position : fixed;
-  bottom : 0;
-  border: 1px solid  #425FC6;
-  cursor : pointer;
-`;
-
-const Select = Styled.select`
-  width : 15rem;
-  height : 2rem;
-  padding: 1px 10px;
-  border-radius: 8px;
-  border: 1px solid #BDBDBD;
-  background-color : white;
-  color : gray;
-  margin: 0 0 40px;
-  box-shadow: 2px 2px 2px #BDBDBD;
-  outline:none;
-  text-align:center;
-  
-  option {
-    color: black;
-    background: white;
-
-  }
-`;
-
-const LocationBtn = Styled.button`
-  all: unset;
-  display : flex;
-  width : fit;
-  height : fit;
-  border-radius : 20px;
-
-  padding : 1rem;
-  background-color : white;
-  justify-content: center;
-  align-items: center;
-  outline:none;
-  &:hover {
-    cursor : pointer;
-  }
-  &:focus {
-    outline:none;
-  }
-`;
-
-const CheckLocation = Styled.img`
-  display : flex;
-  width : 2rem;
-  height : 2rem;
-  justify-content: center;
-  align-items: center;
-`;
+import {
+  Container,
+  FormContainer,
+  TitleBox,
+  TitleLabel,
+  InputLabel,
+  InputBox,
+  ImageInputBtn,
+  ImageInput,
+  SubmitBtn,
+  Select,
+  LocationBtn,
+  CheckLocation,
+  Spinner,
+} from "./styled";
 
 interface EventData {
   title: string;
@@ -294,7 +175,7 @@ const EnrollInfoBox = () => {
 
           {loc.latitude === 0 ? (
             <>
-              {loading ? "<Loading /> " : null}
+              {loading ? <Spinner /> : null}
               <CheckLocation src={beforecheck} />
             </>
           ) : (
