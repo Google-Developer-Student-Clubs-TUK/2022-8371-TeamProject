@@ -35,73 +35,6 @@ const SortBox = styled.div`
   margin-left: 14vw;
 `;
 
-const DisasterList = array.map((disaster) => {
-  return (
-    <div
-      style={{
-        marginLeft: "0.5vw",
-        width: "34vw",
-        height: "15vh",
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "row",
-        backgroundColor: "#ffffff",
-        border: "1px solid black",
-        borderRadius: "15px",
-        marginBottom: "1vh",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginLeft: "1vw",
-        }}
-      >
-        <text style={{ fontSize: "13px", backgroundColor: "white" }}>
-          재난 카테고리
-        </text>
-        <text style={{ marginLeft: "1.5vw" }}>{disaster.category}</text>
-      </div>
-      <div style={{ marginLeft: "1vw" }}>
-        <img src={address} alt="address" />
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          marginBottom: "4vh",
-        }}
-      >
-        <div>
-          <div>{disaster.createdAt}</div>
-        </div>
-        <text
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            marginTop: "2vh",
-          }}
-        >
-          인천 부평구 총선로203번길 24
-        </text>
-      </div>
-
-      <div style={{ marginLeft: "1vw" }}>
-        <img src={checker} alt="checker" />
-      </div>
-      <div style={{ marginLeft: "1vw" }}>{disaster.checkNum}</div>
-      <div style={{ marginLeft: "1vw" }}>
-        {disaster.checkNum >= 5 ? "등록완료" : "등록중"}
-      </div>
-    </div>
-  );
-});
-
 function SideBarList() {
   const queryClient = useQueryClient();
   const queryData: any = queryClient.getQueryData("Disasters");
@@ -182,15 +115,16 @@ function SideBarList() {
                   <div>
                     <div>{disaster.createdAt}</div>
                   </div>
+                  <text style={{ marginTop: "0.5vh" }}>{disaster.title}</text>
                   <text
                     style={{
                       alignItems: "center",
                       justifyContent: "center",
                       fontWeight: "bold",
-                      marginTop: "2vh",
+                      marginTop: "0vh",
                     }}
                   >
-                    인천 부평구 총선로203번길 24
+                    위도 : {disaster.latitude} 경도 : {disaster.longitude}
                   </text>
                 </div>
 
