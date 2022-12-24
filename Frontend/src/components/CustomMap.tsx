@@ -75,21 +75,6 @@ function CustomMap() {
 
           await setCenter({ lat: lat, lng: lng });
           await setLoading(false);
-          const kakao = await (window as any).kakao;
-
-          let geocoder = await new kakao.maps.services.Geocoder();
-          let coord = await new kakao.maps.LatLng(lat, lng);
-          let callback = await function (result: any, status: any) {
-            if (status === kakao.maps.services.Status.OK) {
-              console.log(result);
-              setAddress(result);
-            } else {
-              console.log("주소를찾을수없음");
-              alert("주소를찾을수없음");
-              setAddress("주소를찾을수없음");
-            }
-          };
-          geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
         },
         function (error) {
           console.error(error);

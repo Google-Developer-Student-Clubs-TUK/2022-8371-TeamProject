@@ -73,12 +73,6 @@ function SideBarList() {
               기타
             </option>
           </Category>
-          <SortBox>
-            <h6>등록중/</h6>
-            <h6>등록완료/</h6>
-            <h6>최신순/</h6>
-            <h6>확인순/</h6>
-          </SortBox>
         </Header>
         <div style={{ overflow: "scroll" }}>
           {Disasters.map((disaster: any) => {
