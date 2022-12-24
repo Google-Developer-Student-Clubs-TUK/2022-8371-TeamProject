@@ -39,7 +39,16 @@ function SideBarList() {
   const queryClient = useQueryClient();
   const queryData: any = queryClient.getQueryData("Disasters");
   const [Disasters, setDisasters] = useState(queryData.result);
-  console.log(Disasters);
+  const [DisasterList, setDisasterList] = useState(Disasters);
+
+  function handleCategoryChange(event: any) {
+    console.log(event.target.value);
+    setDisasterList(
+      Disasters.filter((item: any) => item.category === event.target.value)
+    );
+    console.log(DisasterList);
+  }
+
   return (
     <>
       <Container>
@@ -50,7 +59,10 @@ function SideBarList() {
         </h3>
 
         <Header>
-          <Category>
+          <Category onChange={handleCategoryChange}>
+            <option key="전체" value="전체">
+              전체
+            </option>
             <option key="지진" value="지진">
               지진
             </option>
@@ -64,8 +76,8 @@ function SideBarList() {
           <SortBox>
             <h6>등록중/</h6>
             <h6>등록완료/</h6>
-            <h6>최신순</h6>
-            <h6>확인순</h6>
+            <h6>최신순/</h6>
+            <h6>확인순/</h6>
           </SortBox>
         </Header>
         <div style={{ overflow: "scroll" }}>
