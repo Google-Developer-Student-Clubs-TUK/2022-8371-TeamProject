@@ -4,6 +4,7 @@ import { SideBar } from "./SideBar";
 import { List, Right } from "react-bootstrap/lib/Media";
 import address from "../assets/address.png";
 import checker from "../assets/checker.png";
+import { useQuery, useQueryClient } from "react-query";
 
 const Container = styled.div`
   width: 100vw;
@@ -34,59 +35,7 @@ const SortBox = styled.div`
   margin-left: 14vw;
 `;
 
-let array = [
-  {
-    category: "전쟁",
-    createdAt: "2022-12-25",
-    latitude: 29.202,
-    longitude: 10.101,
-    checkNum: 250,
-  },
-  {
-    category: "전쟁",
-    createdAt: "2022-12-25",
-    latitude: 29.202,
-    longitude: 10.101,
-    checkNum: 250,
-  },
-  {
-    category: "전쟁",
-    createdAt: "2022-12-25",
-    latitude: 29.202,
-    longitude: 10.101,
-    checkNum: 250,
-  },
-  {
-    category: "전쟁",
-    createdAt: "2022-12-25",
-    latitude: 29.202,
-    longitude: 10.101,
-    checkNum: 250,
-  },
-  {
-    category: "전쟁",
-    createdAt: "2022-12-25",
-    latitude: 29.202,
-    longitude: 10.101,
-    checkNum: 250,
-  },
-  {
-    category: "전쟁",
-    createdAt: "2022-12-25",
-    latitude: 29.202,
-    longitude: 10.101,
-    checkNum: 250,
-  },
-  {
-    category: "전쟁",
-    createdAt: "2022-12-25",
-    latitude: 29.202,
-    longitude: 10.101,
-    checkNum: 250,
-  },
-];
-
-const DisasterList = array.map((data) => {
+const DisasterList = array.map((disaster) => {
   return (
     <div
       style={{
@@ -112,7 +61,7 @@ const DisasterList = array.map((data) => {
         <text style={{ fontSize: "13px", backgroundColor: "white" }}>
           재난 카테고리
         </text>
-        <text style={{ marginLeft: "1.5vw" }}>{data.category}</text>
+        <text style={{ marginLeft: "1.5vw" }}>{disaster.category}</text>
       </div>
       <div style={{ marginLeft: "1vw" }}>
         <img src={address} alt="address" />
@@ -128,7 +77,7 @@ const DisasterList = array.map((data) => {
         }}
       >
         <div>
-          <div>{data.createdAt}</div>
+          <div>{disaster.createdAt}</div>
         </div>
         <text
           style={{
@@ -145,15 +94,19 @@ const DisasterList = array.map((data) => {
       <div style={{ marginLeft: "1vw" }}>
         <img src={checker} alt="checker" />
       </div>
-      <div style={{ marginLeft: "1vw" }}>{data.checkNum}</div>
+      <div style={{ marginLeft: "1vw" }}>{disaster.checkNum}</div>
       <div style={{ marginLeft: "1vw" }}>
-        {data.checkNum >= 5 ? "등록완료" : "등록중"}
+        {disaster.checkNum >= 5 ? "등록완료" : "등록중"}
       </div>
     </div>
   );
 });
 
 function SideBarList() {
+  const queryClient = useQueryClient();
+  const queryData: any = queryClient.getQueryData("Disasters");
+  const [Disasters, setDisasters] = useState(queryData.result);
+  console.log(Disasters);
   return (
     <>
       <Container>
@@ -182,7 +135,76 @@ function SideBarList() {
             <h6>확인순</h6>
           </SortBox>
         </Header>
-        <div style={{ overflow: "scroll" }}>{DisasterList}</div>
+        <div style={{ overflow: "scroll" }}>
+          {Disasters.map((disaster: any) => {
+            return (
+              <div
+                style={{
+                  marginLeft: "0.5vw",
+                  width: "34vw",
+                  height: "15vh",
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "row",
+                  backgroundColor: "#ffffff",
+                  border: "1px solid black",
+                  borderRadius: "15px",
+                  marginBottom: "1vh",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginLeft: "1vw",
+                  }}
+                >
+                  <text style={{ fontSize: "13px", backgroundColor: "white" }}>
+                    재난 카테고리
+                  </text>
+                  <text style={{ marginLeft: "1.5vw" }}>
+                    {disaster.category}
+                  </text>
+                </div>
+                <div style={{ marginLeft: "1vw" }}>
+                  <img src={address} alt="address" />
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "4vh",
+                  }}
+                >
+                  <div>
+                    <div>{disaster.createdAt}</div>
+                  </div>
+                  <text
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontWeight: "bold",
+                      marginTop: "2vh",
+                    }}
+                  >
+                    인천 부평구 총선로203번길 24
+                  </text>
+                </div>
+
+                <div style={{ marginLeft: "1vw" }}>
+                  <img src={checker} alt="checker" />
+                </div>
+                <div style={{ marginLeft: "1vw" }}>{disaster.checkNum}</div>
+                <div style={{ marginLeft: "1vw" }}>
+                  {disaster.checkNum >= 5 ? "등록완료" : "등록중"}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </Container>
     </>
   );
