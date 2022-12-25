@@ -1,5 +1,6 @@
 package com.gdsc.be8371.event.entity;
 
+import com.gdsc.be8371.event.dto.response.EventListResponseDTO;
 import com.gdsc.be8371.event.dto.response.EventResponseDTO;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +61,23 @@ public class Event {
         this.createdAt = LocalDateTime.now();
     }
 
-    public EventResponseDTO toEventResponseDto(Event event,List<URL> images){
+    public EventListResponseDTO toEventListResponseDto(Event event){
+        log.info("start Event.toEventResponseDto method");
+        return EventListResponseDTO.builder()
+                .id(event.getId())
+                .title(event.getTitle())
+//                .content(event.getContent())
+                .category(event.getCategory())
+                .latitude(event.getLatitude())
+                .longitude(event.getLongitude())
+                .checkNum(event.getCheckNum())
+                .createdAt(event.getCreatedAt())
+                .deadLine((int) ChronoUnit.HOURS.between(LocalDateTime.now(),event.getCreatedAt()))
+//                .images(images)
+                .build();
+    }
+
+    public EventResponseDTO toEventResponseDto(Event event, List<URL> images){
         log.info("start Event.toEventResponseDto method");
         return EventResponseDTO.builder()
                 .id(event.getId())
