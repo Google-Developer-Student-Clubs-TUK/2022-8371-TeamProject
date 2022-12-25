@@ -7,6 +7,8 @@ import com.gdsc.be8371.event.entity.Event;
 import com.gdsc.be8371.event.entity.Image;
 import com.gdsc.be8371.event.repository.EventRepository;
 import com.gdsc.be8371.event.repository.ImageRepository;
+import com.gdsc.be8371.global.exception.EventExceptionType;
+import com.gdsc.be8371.global.exception.FreeBoardException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +65,13 @@ public class EventServiceImpl implements EventService {
     @Override
     public void create(EventRequestDTO eventRequestDTO, List<String> urls) throws Exception{
         log.info("start EventService.create method");
+        String latiValue = Float.toString(eventRequestDTO.getLatitude());
+        String longiValue = Float.toString(eventRequestDTO.getLongitude());
+//        System.out.println(latiValue);
+//        System.out.println(longiValue);
+//        if (Event.builder().longitude(null)){
+//            throw new FreeBoardException(EventExceptionType.NULL_PLACE_VALUE);
+//        }
         Event saveEvent = eventRequestDTO.toEventEntity(eventRequestDTO);
         eventRepository.save(saveEvent);
         List<String> urlList = new ArrayList<>();

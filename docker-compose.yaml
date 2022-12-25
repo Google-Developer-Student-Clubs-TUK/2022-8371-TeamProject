@@ -1,0 +1,37 @@
+version: "3"
+services:
+  # db:
+  #   image: mysql:5.7
+  #   container_name: mysql
+  #   restart: always
+  #   platform: linux/amd64
+  #   command: mysqld --innodb_use_native_aio=0
+  #   ports:
+  #     - 3306:3306
+  #   environment:
+  #     SPRING_DATASOURCE_URL : jdbc:mysql://db:3306/gdsc?serverTimezone=Asia/Seoul
+  #     SPRING_DATASOURCE_NAME: mysql
+  #     SPRING_DATASOURCE_PASSWORD: 1234
+  #   volumes:
+  #     - ./data:/var/lib/mysql
+
+  backend:
+    restart: always
+    container_name: backend
+    build:
+      context: ./Backend
+    ports:
+      - 8080:8080
+    # depends_on:
+    #   - db
+
+  nginx:
+    build: 
+      context: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+
+volumes:
+  db:
