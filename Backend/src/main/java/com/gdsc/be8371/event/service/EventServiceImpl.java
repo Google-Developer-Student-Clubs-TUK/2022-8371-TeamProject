@@ -90,13 +90,13 @@ public class EventServiceImpl implements EventService {
         List<EventListResponseDTO> eventResponseDTOList = new ArrayList<>();
 
         for(Event event : events){
-//            List<URL> images = new ArrayList<>();
-//            List<String> strUrls = imageRepository.findImagesByEventId(event.getId());
-//            for(String strUrl : strUrls){
-//                URL url = new URL(strUrl);
-//                images.add(url);
-//            }
-            eventResponseDTOList.add(event.toEventListResponseDto(event));
+            List<URL> images = new ArrayList<>();
+            List<String> strUrls = imageRepository.findImagesByEventId(event.getId());
+            for(String strUrl : strUrls){
+                URL url = new URL(strUrl);
+                images.add(url);
+            }
+            eventResponseDTOList.add(event.toEventListResponseDto(event,images));
         }
         return eventResponseDTOList;
     }

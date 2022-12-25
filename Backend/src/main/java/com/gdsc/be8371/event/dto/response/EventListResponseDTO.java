@@ -10,15 +10,16 @@ import java.util.List;
 @Builder
 @Getter
 @ToString
-public class EventListResponseDTO {
+public class EventListResponseDTO{
     private Integer id;
     private String title;
-//    private String content;
+    private String content;
     private String category;
     private float latitude;
     private float longitude;
     private int checkNum;
-//    private List<URL> images;
+    private List<URL> images;
     private LocalDateTime createdAt;
     private int deadLine;
+
 }

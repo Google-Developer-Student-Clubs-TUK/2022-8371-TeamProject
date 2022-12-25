@@ -61,19 +61,19 @@ public class Event {
         this.createdAt = LocalDateTime.now();
     }
 
-    public EventListResponseDTO toEventListResponseDto(Event event){
+    public EventListResponseDTO toEventListResponseDto(Event event,List<URL> images){
         log.info("start Event.toEventResponseDto method");
         return EventListResponseDTO.builder()
                 .id(event.getId())
                 .title(event.getTitle())
-//                .content(event.getContent())
+                .content(event.getContent())
                 .category(event.getCategory())
                 .latitude(event.getLatitude())
                 .longitude(event.getLongitude())
                 .checkNum(event.getCheckNum())
                 .createdAt(event.getCreatedAt())
                 .deadLine((int) ChronoUnit.HOURS.between(LocalDateTime.now(),event.getCreatedAt()))
-//                .images(images)
+                .images(images)
                 .build();
     }
 
