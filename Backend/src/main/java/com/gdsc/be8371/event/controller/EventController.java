@@ -63,6 +63,13 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK).headers(createHeaders()).body(responseFormat);
     }
 
+    // 예외처리
+//    @ExceptionHandler(NullPointerException.class)
+//    public Object nullEx(Exception e){
+//        System.out.println(e.getClass());
+//        return "요청받은 데이터 값이 Null인 데이터가 있습니다.";
+//    }
+
     public HttpHeaders createHeaders(){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
