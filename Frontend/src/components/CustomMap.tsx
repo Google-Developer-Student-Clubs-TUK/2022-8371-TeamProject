@@ -13,6 +13,7 @@ import CurrentButton from "../assets/current.png";
 import Loading from "./Loading";
 import axios from "axios";
 import { useQuery } from "react-query";
+import EventDetailBox from "./EventDetailBox";
 
 const containerStyle = {
   width: "100vw",
@@ -119,7 +120,7 @@ function CustomMap() {
             >
               {activeMarker === data.id ? (
                 <InfoWindow onCloseClick={() => setActiveMarker(null)}>
-                  <div>{data.id}</div>
+                  <EventDetailBox data={data} />
                 </InfoWindow>
               ) : null}
             </Marker>
