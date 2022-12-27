@@ -9,10 +9,9 @@ export default defineConfig({
     host: true,
     port: 3000,
     proxy: {
-      "/api": "http://localhost:8080",
+      "/api": "http://35.194.109.0",
     },
   },
-
   resolve: {
     // 절대경로 설정
     alias: {

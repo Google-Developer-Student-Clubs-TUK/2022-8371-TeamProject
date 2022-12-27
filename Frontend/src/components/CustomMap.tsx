@@ -20,7 +20,7 @@ const containerStyle = {
 };
 
 const getDisasterWithAxios = async () => {
-  const { data } = await axios.get("http://localhost:8080/api/v1/event");
+  const { data } = await axios.get("/api/v1/event");
   return data;
 };
 
