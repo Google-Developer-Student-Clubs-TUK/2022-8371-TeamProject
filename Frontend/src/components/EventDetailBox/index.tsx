@@ -11,12 +11,15 @@ import {
 
 import checkimg from "@/assets/checkimg.png";
 import axios from "axios";
+import { useState } from "react";
 
 const EventDetailBox = (props: any) => {
+  const [Render, setRender] = useState(0);
+
   const putTest = async () => {
     await axios
       .put(`api/v1/event?id=${props.data.id}`)
-      .then((res) => console.log(res))
+      .then((res) => setRender((prev) => prev + 1))
       .catch((err) => console.log(err));
   };
 

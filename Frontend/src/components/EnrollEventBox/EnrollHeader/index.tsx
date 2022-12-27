@@ -3,9 +3,7 @@ import backbtn from "@/assets/backbtn.png";
 import { Container, HeaderText, BackBtn, BackImg } from "./styled";
 
 const EnrollHeader = () => {
-  const handleClickTest = () => {
-    console.log("success");
-  };
+  const handleClickTest = () => {};
   return (
     <Container>
       <HeaderText>Enroll Event</HeaderText>

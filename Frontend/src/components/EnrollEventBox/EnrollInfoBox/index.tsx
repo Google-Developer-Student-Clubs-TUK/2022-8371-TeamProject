@@ -76,10 +76,15 @@ const EnrollInfoBox = () => {
       latitude: loc!.latitude,
       longitude: loc!.longitude,
     };
+
     console.log(postEventData);
 
     await axios
-      .post("/api/v1/event", postEventData)
+      .post("/api/v1/event", postEventData, {
+        headers: {
+          "Content-Type": `multipart/form-data`,
+        },
+      })
       .then((res) => {
         console.log(res);
       })
@@ -123,16 +128,12 @@ const EnrollInfoBox = () => {
 
             setLoc(pos);
             setLoading(false);
-            console.log(pos, "location info success");
           }
         );
       } else {
         // Browser doesn't support Geolocation
-        console.log("else");
       }
-    } catch (err) {
-      console.log("try catch error");
-    }
+    } catch (err) {}
   };
 
   return (

@@ -42,11 +42,19 @@ function SideBarList() {
   const [DisasterList, setDisasterList] = useState(Disasters);
 
   function handleCategoryChange(event: any) {
+    setDisasters(queryData.result);
     console.log(event.target.value);
-    setDisasterList(
-      Disasters.filter((item: any) => item.category === event.target.value)
-    );
-    console.log(DisasterList);
+    if (event.target.value === "전체") {
+      console.log("전체재난카테고리");
+      setDisasterList(Disasters);
+
+      console.log(Disasters);
+    } else {
+      console.log("전체아님");
+      setDisasterList(
+        Disasters.filter((item: any) => item.category === event.target.value)
+      );
+    }
   }
 
   return (
@@ -75,7 +83,7 @@ function SideBarList() {
           </Category>
         </Header>
         <div style={{ overflow: "scroll" }}>
-          {Disasters.map((disaster: any) => {
+          {DisasterList.map((disaster: any) => {
             return (
               <div
                 style={{

@@ -56,9 +56,7 @@ function CustomMap() {
       retry: 3,
       onSuccess: (data) => {
         // 성공시 호출
-        console.log(data.result);
         setMarker([...data.result]);
-        console.log(markers);
       },
     }
   );
@@ -110,7 +108,12 @@ function CustomMap() {
         >
           <img src={CurrentButton} alt="CurrentButton" />
         </button>
-        <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+        <GoogleMap
+          onClick={() => setActiveMarker(null)}
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={15}
+        >
           {markers.map((data: any) => (
             <Marker
               icon={data.checkNum >= 5 ? CustomMarker1 : CustomMarker2}
