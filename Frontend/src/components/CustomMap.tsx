@@ -128,7 +128,9 @@ function CustomMap() {
         {loading && <Loading />}
       </>
     );
+  } else {
+    return null;
   }
 }
 
-export default React.memo(CustomMap);
+export default CustomMap;
