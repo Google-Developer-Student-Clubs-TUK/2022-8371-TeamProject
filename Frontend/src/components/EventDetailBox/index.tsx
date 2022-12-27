@@ -1,49 +1,44 @@
-import React from "react";
-import Styled from "styled-components";
-import EnrollHeader from "./EventDetailHeader";
-import EnrollInfoBox from "./EventDetailBox";
+import {
+  EnrollBox,
+  Container,
+  TitleLabel,
+  InputImg,
+  TextLabel,
+  TextBox,
+  CheckBtn,
+  CheckImg,
+} from "./styled";
 
-const Container = Styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height : 100vh;
-  flex-direction: column;
-  background-color: white;
-`;
+import checkimg from "@/assets/checkimg.png";
+import axios from "axios";
 
-const EnrollBox = Styled.div`
-  display: flex;
-  width: 35rem;
-  height : 45rem;
-  border: 1px solid black;
-  background-color: white;
-  border-radius: 20px 0px 0px 20px;
-  flex-direction: column;
-`;
+const EventDetailBox = (props: any) => {
+  const putTest = async () => {
+    await axios
+      .put(`api/v1/event?id=${props.data.id}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
-const InputBox = Styled.input`
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-  color : black;
-`;
-
-const EventDetailBox = () => {
   return (
-    <Container>
-      <EnrollBox>
-        <EnrollHeader />
-        <EnrollInfoBox />
-      </EnrollBox>
-    </Container>
+    <EnrollBox>
+      <Container>
+        <TitleLabel>Event Detail</TitleLabel>
+        <InputImg src={props.data.images[0]} />
+        <TextLabel>재난 상황</TextLabel>
+        <TextBox>{props.data.category}</TextBox>
+
+        <TextLabel>내용</TextLabel>
+        <TextBox>{props.data.content}</TextBox>
+
+        <TextLabel>위치</TextLabel>
+        <TextBox>인천 부평구 충선로203번길 24</TextBox>
+
+        <CheckBtn onClick={putTest}>
+          <CheckImg src={checkimg} />
+        </CheckBtn>
+      </Container>
+    </EnrollBox>
   );
 };
 
