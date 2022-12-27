@@ -6,7 +6,7 @@ function MainPage() {
   return (
     <div>
       <Header></Header>
-      <CustomMap></CustomMap>
+      <CustomMap />
     </div>
   );
 }
